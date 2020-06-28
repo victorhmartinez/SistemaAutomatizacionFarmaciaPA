@@ -62,4 +62,8 @@ public class ObtenerMedicamentos {
 
     }
 
+    public boolean eliminarMedicamento(String nombreMedic) {
+        datMedicamento.eliminarMedicamento(nombreMedic);
+        return true;
+    }
 }

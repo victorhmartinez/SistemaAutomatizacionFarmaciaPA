@@ -37,6 +37,8 @@ public class ModuloProductos extends javax.swing.JFrame {
     ObtenerMedicamentos obMedic = new ObtenerMedicamentos();
     ModuloMonodrogas objMonodrogas = new ModuloMonodrogas();
     DefaultTableModel dtm;
+    ObtenerMedicamentos objObtenerMedic = new ObtenerMedicamentos();
+
     TableRowSorter trs = null;
     int idSelect;
 
@@ -130,7 +132,6 @@ private void modificar(Medicamentos m){
         jFormattedTextField1.setText("jFormattedTextField1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(800, 600));
 
         jDesktopPane1.setBackground(new java.awt.Color(229, 240, 241));
         jDesktopPane1.setPreferredSize(new java.awt.Dimension(800, 600));
@@ -172,6 +173,11 @@ private void modificar(Medicamentos m){
         btnIngresarMedicamento.setFont(new java.awt.Font("Microsoft JhengHei UI", 1, 12)); // NOI18N
         btnIngresarMedicamento.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMG/Sistema/insert.png"))); // NOI18N
         btnIngresarMedicamento.setText("INGRESAR");
+        btnIngresarMedicamento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnIngresarMedicamentoActionPerformed(evt);
+            }
+        });
 
         btnRealizarComposicion.setFont(new java.awt.Font("Microsoft JhengHei UI", 1, 12)); // NOI18N
         btnRealizarComposicion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMG/Sistema/accept.png"))); // NOI18N
@@ -400,8 +406,8 @@ private void modificar(Medicamentos m){
                  objMonodrogas.setVisible(true);
 
             }*/
-        ModuloComposicion objModComposicion = new ModuloComposicion();
-        objModComposicion.setVisible(true);
+//        ModuloComposicion objModComposicion = new ModuloComposicion();
+//        objModComposicion.setVisible(true);
 
 
     }//GEN-LAST:event_btnRealizarComposicionMouseClicked
@@ -493,6 +499,45 @@ private void modificar(Medicamentos m){
       
         
     }//GEN-LAST:event_btnEditarMedicamentoActionPerformed
+
+    private void btnIngresarMedicamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarMedicamentoActionPerformed
+        // TODO add your handling code here:
+         // TODO add your handling code here:
+        SimpleDateFormat fechaFormato = new SimpleDateFormat("yyyy-MM-dd");
+        Date fechaElab = null;
+        Date fechaCaduc = null;
+        try {
+
+            java.util.Date uDatete = fechaFormato.parse(txtFechaElabor.getText());
+            fechaElab = new Date(uDatete.getTime());
+            java.util.Date uDatetee = fechaFormato.parse(txtFechaExpiracion.getText());
+            fechaCaduc = new Date(uDatetee.getTime());
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Fecha Incorrecta", "ERROR", JOptionPane.WARNING_MESSAGE);
+        }
+
+        Medicamentos objMedicamentos = new Medicamentos(0,
+                this.txtNombreMedicamento.getText(),
+                Double.parseDouble(this.txtPrecioMedicamento.getText()),
+                Integer.parseInt(this.txtExistenciaTotal.getText()),
+                fechaElab,
+                fechaCaduc,
+                this.txtLote.getText()
+       );
+         System.out.println(objMedicamentos.toString()); //una demostracion de que se esta mandando bien los datos
+        try {
+            objObtenerMedic.insertarArticulo(objMedicamentos);
+        } catch (SQLException ex) {
+            Logger.getLogger(ModuloProductos.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(ModuloProductos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        listMedicamentos.clear();
+        //Limpiamos la tabla
+        limpiarTabla();
+       //Volvemos llenar la tabla con los datos
+        llenarTabla();
+    }//GEN-LAST:event_btnIngresarMedicamentoActionPerformed
 
     /**
      * @param args the command line arguments

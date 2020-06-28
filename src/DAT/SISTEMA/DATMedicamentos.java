@@ -5,13 +5,16 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import javax.swing.JOptionPane;
 import ENT.Sistema.Medicamentos;
+import java.awt.HeadlessException;
+import java.sql.PreparedStatement;
 
 /**
  *
  * @author Usuario
  */
 public class DATMedicamentos {
-
+  PreparedStatement ps = null;
+    public ResultSet rs;
     
     ConexionBD conecta  = new ConexionBD();
 //Senetencia para tener todos los medicamentos
@@ -42,7 +45,7 @@ public class DATMedicamentos {
                   
     }
 
-    public int insertarMedicamento(Medicamentos objMedicamentos) throws SQLException {
+  public int insertarMedicamento(Medicamentos objMedicamentos) throws SQLException {
         int intRetorno = 0;
         Statement st = conecta.conectarBD().createStatement();
         String Sentencia = "insert into medicamento(nombreMedic,precioMedic,existenciTot,fechaElab,fechaExpira,lote)"
@@ -54,8 +57,8 @@ public class DATMedicamentos {
                 + objMedicamentos.getFecha_Expira() + "','"
                 + objMedicamentos.getLote()
                 + "')";
-        JOptionPane.showMessageDialog(null, "Agregado con EXITO");
         intRetorno = st.executeUpdate(Sentencia); // envia la sentencia a la bd
+        JOptionPane.showMessageDialog(null, "Agregado con EXITO");
         return intRetorno;
     }
 
@@ -76,4 +79,36 @@ public class DATMedicamentos {
         return intRetorno;
     }
 
+         public void eliminarMedicamento(String nombreMedic) {
+
+        int confirmar = JOptionPane.showConfirmDialog(null, "Realmente desea eliminar?");
+        if (confirmar == JOptionPane.OK_OPTION) {
+
+            try {
+                String Sentencia = "DELETE FROM empleado WHERE nombreMedic = ?";
+                ResultSet rs = ps.executeQuery(Sentencia);
+                ps.setString(1, nombreMedic);
+                if (ps.executeUpdate() > 0) {
+                    JOptionPane.showMessageDialog(null, "Se ha eliminado al Empleado");
+                } else {
+                    JOptionPane.showMessageDialog(null, "No se ha podido eliminar al elemento.\n "
+                            + "Intente denuevo");
+
+                }
+            } catch (HeadlessException | SQLException e) {
+                JOptionPane.showMessageDialog(null, "No se ha podido eliminar al elemento.\n " + " Intente denuevo.\n" + e);
+            } finally {
+                if (conecta != null) {
+                    try {
+                        conecta.desconectarBD();
+                    } catch (Exception e) {
+                        JOptionPane.showMessageDialog(null, "Se ha producido un error a la hora de cerrar la conexion.\n " + " Con la BD.\n" + e);
+
+                    }
+                }
+            }
+
+        }
+
+    }
 }

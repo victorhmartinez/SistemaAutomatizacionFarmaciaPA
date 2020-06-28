@@ -91,11 +91,11 @@ public class ModuloProductos extends javax.swing.JFrame {
         jLabel7.setText("Fecha Expiración:");
 
         btnCancelar.setFont(new java.awt.Font("Microsoft JhengHei UI", 1, 12)); // NOI18N
-        btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/SAF/IMG/Cancel.png"))); // NOI18N
+        btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMG/Sistema/Cancel.png"))); // NOI18N
         btnCancelar.setText("CANCELAR");
 
         btnIngresarMedicamento.setFont(new java.awt.Font("Microsoft JhengHei UI", 1, 12)); // NOI18N
-        btnIngresarMedicamento.setIcon(new javax.swing.ImageIcon(getClass().getResource("/SAF/IMG/insert.png"))); // NOI18N
+        btnIngresarMedicamento.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMG/Sistema/insert.png"))); // NOI18N
         btnIngresarMedicamento.setText("INGRESAR");
 
         jLabel9.setFont(new java.awt.Font("Microsoft JhengHei UI", 0, 12)); // NOI18N
@@ -180,7 +180,7 @@ public class ModuloProductos extends javax.swing.JFrame {
                             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(txtExistenciaTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtLote, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel5))))
@@ -193,7 +193,7 @@ public class ModuloProductos extends javax.swing.JFrame {
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Búsqueda", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Microsoft JhengHei UI", 0, 12))); // NOI18N
 
         btnEditarMedicamento.setFont(new java.awt.Font("Microsoft JhengHei UI", 1, 12)); // NOI18N
-        btnEditarMedicamento.setIcon(new javax.swing.ImageIcon(getClass().getResource("/SAF/IMG/edit.png"))); // NOI18N
+        btnEditarMedicamento.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMG/Sistema/edit.png"))); // NOI18N
         btnEditarMedicamento.setText("EDITAR");
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
@@ -210,7 +210,7 @@ public class ModuloProductos extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jTable1);
 
         btnBuscarMedicamento.setFont(new java.awt.Font("Microsoft JhengHei UI", 1, 12)); // NOI18N
-        btnBuscarMedicamento.setIcon(new javax.swing.ImageIcon(getClass().getResource("/SAF/IMG/search.png"))); // NOI18N
+        btnBuscarMedicamento.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMG/Sistema/search.png"))); // NOI18N
         btnBuscarMedicamento.setText("BUSCAR");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -223,7 +223,7 @@ public class ModuloProductos extends javax.swing.JFrame {
                     .addComponent(jScrollPane1)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(txtBusquedaMedicamento, javax.swing.GroupLayout.PREFERRED_SIZE, 434, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnBuscarMedicamento)
                         .addGap(18, 18, 18)
                         .addComponent(btnEditarMedicamento)))
@@ -263,7 +263,7 @@ public class ModuloProductos extends javax.swing.JFrame {
                 .addGap(112, 112, 112))
         );
 
-        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/SAF/IMG/pastilla.png"))); // NOI18N
+        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMG/Sistema/pastilla.png"))); // NOI18N
         jLabel8.setText(" ");
 
         jDesktopPane1.setLayer(jLabel4, javax.swing.JLayeredPane.DEFAULT_LAYER);

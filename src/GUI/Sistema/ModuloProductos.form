@@ -229,7 +229,7 @@
                                           <Component id="txtExistenciaTotal" alignment="3" min="-2" pref="27" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
-                                  <EmptySpace pref="20" max="32767" attributes="0"/>
+                                  <EmptySpace max="32767" attributes="0"/>
                                   <Group type="103" groupAlignment="3" attributes="0">
                                       <Component id="txtLote" alignment="3" min="-2" pref="27" max="-2" attributes="0"/>
                                       <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -312,7 +312,7 @@
                       <Font name="Microsoft JhengHei UI" size="12" style="1"/>
                     </Property>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/SAF/IMG/Cancel.png"/>
+                      <Image iconType="3" name="/IMG/Sistema/Cancel.png"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value="CANCELAR"/>
                   </Properties>
@@ -323,7 +323,7 @@
                       <Font name="Microsoft JhengHei UI" size="12" style="1"/>
                     </Property>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/SAF/IMG/insert.png"/>
+                      <Image iconType="3" name="/IMG/Sistema/insert.png"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value="INGRESAR"/>
                   </Properties>
@@ -370,7 +370,7 @@
                               <Component id="jScrollPane1" max="32767" attributes="0"/>
                               <Group type="102" attributes="0">
                                   <Component id="txtBusquedaMedicamento" min="-2" pref="434" max="-2" attributes="0"/>
-                                  <EmptySpace pref="36" max="32767" attributes="0"/>
+                                  <EmptySpace max="32767" attributes="0"/>
                                   <Component id="btnBuscarMedicamento" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
                                   <Component id="btnEditarMedicamento" min="-2" max="-2" attributes="0"/>
@@ -405,7 +405,7 @@
                       <Font name="Microsoft JhengHei UI" size="12" style="1"/>
                     </Property>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/SAF/IMG/edit.png"/>
+                      <Image iconType="3" name="/IMG/Sistema/edit.png"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value="EDITAR"/>
                   </Properties>
@@ -438,7 +438,7 @@
                       <Font name="Microsoft JhengHei UI" size="12" style="1"/>
                     </Property>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/SAF/IMG/search.png"/>
+                      <Image iconType="3" name="/IMG/Sistema/search.png"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value="BUSCAR"/>
                   </Properties>
@@ -450,7 +450,7 @@
         <Component class="javax.swing.JLabel" name="jLabel8">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/SAF/IMG/pastilla.png"/>
+              <Image iconType="3" name="/IMG/Sistema/pastilla.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value=" "/>
           </Properties>

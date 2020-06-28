@@ -117,7 +117,7 @@
         <Component class="javax.swing.JLabel" name="jLabel1">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/SAF/IMG/Fondo.jpg"/>
+              <Image iconType="3" name="/IMG/Sistema/Fondo.jpg"/>
             </Property>
             <Property name="toolTipText" type="java.lang.String" value=""/>
           </Properties>
@@ -133,7 +133,7 @@
               <Font name="Tahoma" size="18" style="1"/>
             </Property>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/SAF/IMG/pastillas.png"/>
+              <Image iconType="3" name="/IMG/Sistema/pastillas.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="PRODUCTOS"/>
           </Properties>

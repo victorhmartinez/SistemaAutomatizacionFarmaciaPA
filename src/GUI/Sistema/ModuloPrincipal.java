@@ -54,13 +54,13 @@ public class ModuloPrincipal extends javax.swing.JFrame {
         jdpescritorio.add(jLabel4);
         jLabel4.setBounds(20, 150, 620, 37);
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/SAF/IMG/Fondo.jpg"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMG/Sistema/Fondo.jpg"))); // NOI18N
         jLabel1.setToolTipText("");
         jdpescritorio.add(jLabel1);
         jLabel1.setBounds(-10, 110, 1650, 490);
 
         btnProductos.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        btnProductos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/SAF/IMG/pastillas.png"))); // NOI18N
+        btnProductos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMG/Sistema/pastillas.png"))); // NOI18N
         btnProductos.setText("PRODUCTOS");
         jdpescritorio.add(btnProductos);
         btnProductos.setBounds(20, 30, 200, 50);

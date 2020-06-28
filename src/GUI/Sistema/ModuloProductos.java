@@ -5,8 +5,24 @@
  */
 package GUI.Sistema;
 
+import DAT.SISTEMA.DATMedicamentos;
+import ENT.Sistema.Medicamentos;
+import LOG.Sistema.ObtenerMedicamentos;
 import java.awt.Dimension;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.io.IOException;
+import java.sql.Date;
+import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.RowFilter;
+import javax.swing.table.DefaultTableColumnModel;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 
 /**
  *
@@ -17,18 +33,63 @@ public class ModuloProductos extends javax.swing.JFrame {
     /**
      * Creates new form ModuloProductos
      */
+    ArrayList<Medicamentos> listMedicamentos = new ArrayList<>();
+    ObtenerMedicamentos obMedic = new ObtenerMedicamentos();
     ModuloMonodrogas objMonodrogas = new ModuloMonodrogas();
+    DefaultTableModel dtm;
+    TableRowSorter trs = null;
+    int idSelect;
+
     public ModuloProductos() {
         initComponents();
         //Línea 1
-        this.setSize(new Dimension (800, 600));
-        setLocationRelativeTo(null);   
+        this.setSize(new Dimension(800, 600));
+        setLocationRelativeTo(null);
         setTitle("Productos");
         this.setMinimumSize(new Dimension(200, 200));
-        
-        
+     
+        llenarTabla();
+
     }
 
+    private void cargarMedicamentos(ArrayList<Medicamentos> listMedicamento) {
+        try {
+            obMedic.getAllMedicamentos(listMedicamento);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Se producido un error al cagar los datos de la base", "ATENCION", JOptionPane.ERROR_MESSAGE);
+        }
+
+    }
+
+    private void llenarTabla() {
+        cargarMedicamentos(listMedicamentos);
+        dtm = (DefaultTableModel) tblMedicamentos.getModel();
+        Object[] tablFilas = new Object[dtm.getColumnCount()];
+        for (Medicamentos medicamentos : listMedicamentos) {
+            tablFilas[0] = medicamentos.getIdMedicamento();
+            tablFilas[1] = medicamentos.getNombreMedic();
+            tablFilas[2] = medicamentos.getPrecioMedic();
+            tablFilas[3] = medicamentos.getExistenciTot();
+            tablFilas[4] = medicamentos.getLote();
+            dtm.addRow(tablFilas);
+
+        }
+    }
+       private void limpiarTabla() {
+        for (int i = 0; i < tblMedicamentos.getRowCount(); i++) {
+            dtm.removeRow(i);
+            i -= 1;
+        }
+    }
+private void modificar(Medicamentos m){
+      try {
+           if(obMedic.modificarMedicamento(m)) {
+               JOptionPane.showMessageDialog(null, "Se a modificado correctamento los datos", "ATENCION",JOptionPane.OK_OPTION);
+           }
+                    } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "No se puede modificar", "ATENCION", JOptionPane.ERROR_MESSAGE);
+        } 
+}
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -200,21 +261,34 @@ public class ModuloProductos extends javax.swing.JFrame {
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Búsqueda", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Microsoft JhengHei UI", 0, 12))); // NOI18N
 
+        txtBusquedaMedicamento.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtBusquedaMedicamentoKeyTyped(evt);
+            }
+        });
+
         btnEditarMedicamento.setFont(new java.awt.Font("Microsoft JhengHei UI", 1, 12)); // NOI18N
         btnEditarMedicamento.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMG/Sistema/edit.png"))); // NOI18N
         btnEditarMedicamento.setText("EDITAR");
+        btnEditarMedicamento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarMedicamentoActionPerformed(evt);
+            }
+        });
 
         tblMedicamentos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+
             },
             new String [] {
                 "ID", "Nombre", "Precio", "Existencia Total", "Lote"
             }
         ));
+        tblMedicamentos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblMedicamentosMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblMedicamentos);
 
         btnBuscarMedicamento.setFont(new java.awt.Font("Microsoft JhengHei UI", 1, 12)); // NOI18N
@@ -305,11 +379,11 @@ public class ModuloProductos extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jDesktopPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 740, Short.MAX_VALUE)
+            .addComponent(jDesktopPane1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jDesktopPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 562, Short.MAX_VALUE)
+            .addComponent(jDesktopPane1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -328,8 +402,8 @@ public class ModuloProductos extends javax.swing.JFrame {
             }*/
         ModuloComposicion objModComposicion = new ModuloComposicion();
         objModComposicion.setVisible(true);
-            
-        
+
+
     }//GEN-LAST:event_btnRealizarComposicionMouseClicked
 
     private void btnCancelarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCancelarMouseClicked
@@ -341,6 +415,84 @@ public class ModuloProductos extends javax.swing.JFrame {
         txtFechaElabor.setText("");
         txtFechaExpiracion.setText("");
     }//GEN-LAST:event_btnCancelarMouseClicked
+
+    private void txtBusquedaMedicamentoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBusquedaMedicamentoKeyTyped
+        // TODO add your handling code here:
+        //usamos el metodo KeyTyped para buscar el nombre del producto
+        txtBusquedaMedicamento.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                //Designamos a la fila en comluna en la que queremos buscar en este caso por nombre "1" y con lo debe compara
+                trs.setRowFilter(RowFilter.regexFilter("(?i)" + txtBusquedaMedicamento.getText(), 1));
+            }
+
+        });
+        trs = new TableRowSorter(dtm);
+        tblMedicamentos.setRowSorter(trs);
+
+    }//GEN-LAST:event_txtBusquedaMedicamentoKeyTyped
+
+    private void tblMedicamentosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblMedicamentosMouseClicked
+        // TODO add your handling code here:
+        
+        Medicamentos m;
+        //Obtemos la fila a la q pertenece el medicamento
+        int selection = tblMedicamentos.rowAtPoint(evt.getPoint());
+        //Obtenemos el id del medicamento seleccionado
+        String id = String.valueOf(tblMedicamentos.getValueAt(selection, 0));
+        //Lo convertimos a  int para poder buscar
+        idSelect = Integer.parseInt(id);
+        //Obtemos el medicamento
+        m = obMedic.getOneMedicamento(listMedicamentos, idSelect);
+        //Presentamos los datos del medicamento en los txt
+        txtNombreMedicamento.setText(m.getNombreMedic());
+        txtPrecioMedicamento.setText(String.valueOf(m.getPrecioMedic()));
+        txtExistenciaTotal.setText(String.valueOf(m.getExistenciTot()));
+        txtLote.setText(m.getLote());
+        txtFechaElabor.setText(m.getFechaElab().toString());
+        txtFechaExpiracion.setText(m.getFecha_Expira().toString());
+
+    }//GEN-LAST:event_tblMedicamentosMouseClicked
+
+    private void btnEditarMedicamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarMedicamentoActionPerformed
+        // TODO add your handling code here:
+        //Obtenemos el id del Producto
+        Medicamentos m;
+        m = obMedic.getOneMedicamento(listMedicamentos, idSelect);
+        //Establecemos los nuevos valores al medicamento
+        m.setNombreMedic(txtNombreMedicamento.getText());
+        m.setPrecioMedic(Double.parseDouble(txtPrecioMedicamento.getText()));
+        m.setExistenciTot(Integer.parseInt(txtExistenciaTotal.getText()));
+        m.setLote(txtLote.getText());
+        //Transformamos las fechas a tipo date de sql
+        SimpleDateFormat fechaFormato = new SimpleDateFormat("yyyy-MM-dd");
+        Date fechaElab = null;
+        Date fechaCaduc = null;
+        try {
+
+            java.util.Date uDatete = fechaFormato.parse(txtFechaElabor.getText());
+            fechaElab = new Date(uDatete.getTime());
+
+            java.util.Date uDatetee = fechaFormato.parse(txtFechaExpiracion.getText());
+            fechaCaduc = new Date(uDatetee.getTime());
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Fecha Incorrecta", "ERROR", JOptionPane.WARNING_MESSAGE);
+        }
+        //Establecemos las fechas al medicamento
+        m.setFechaElab(fechaElab);
+        m.setFecha_Expira(fechaCaduc);
+        //Modificamos los datos
+        modificar(m);
+        //Borramos los datos del ArrayList
+        listMedicamentos.clear();
+        //Limpiamos la tabla
+        limpiarTabla();
+       //Volvemos llenar la tabla con los datos
+        llenarTabla();
+        
+      
+        
+    }//GEN-LAST:event_btnEditarMedicamentoActionPerformed
 
     /**
      * @param args the command line arguments

@@ -57,13 +57,16 @@ public class ObtenerMedicamentos {
 
     }
 
-    public void insertarArticulo(Medicamentos objMedic) throws SQLException, ClassNotFoundException {
+    public void insertarMedicamento(Medicamentos objMedic) throws SQLException, ClassNotFoundException {
         datMedicamento.insertarMedicamento(objMedic);
 
     }
 
-    public boolean eliminarMedicamento(String nombreMedic) {
-        datMedicamento.eliminarMedicamento(nombreMedic);
-        return true;
+    public boolean eliminarMedicamento(int idMedicamento) throws ClassNotFoundException, SQLException {
+//        datMedicamento.eliminarMedicamento(idMedicamento);
+        if (datMedicamento.eliminarMedicamento(idMedicamento)==0) {
+            return false;
+        }else
+            return true;
     }
 }

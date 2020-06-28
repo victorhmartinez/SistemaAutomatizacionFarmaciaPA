@@ -37,7 +37,6 @@ public class ModuloProductos extends javax.swing.JFrame {
     ObtenerMedicamentos obMedic = new ObtenerMedicamentos();
     ModuloMonodrogas objMonodrogas = new ModuloMonodrogas();
     DefaultTableModel dtm;
-    ObtenerMedicamentos objObtenerMedic = new ObtenerMedicamentos();
 
     TableRowSorter trs = null;
     int idSelect;
@@ -49,7 +48,7 @@ public class ModuloProductos extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         setTitle("Productos");
         this.setMinimumSize(new Dimension(200, 200));
-     
+
         llenarTabla();
 
     }
@@ -77,21 +76,24 @@ public class ModuloProductos extends javax.swing.JFrame {
 
         }
     }
-       private void limpiarTabla() {
+
+    private void limpiarTabla() {
         for (int i = 0; i < tblMedicamentos.getRowCount(); i++) {
             dtm.removeRow(i);
             i -= 1;
         }
     }
-private void modificar(Medicamentos m){
-      try {
-           if(obMedic.modificarMedicamento(m)) {
-               JOptionPane.showMessageDialog(null, "Se a modificado correctamento los datos", "ATENCION",JOptionPane.OK_OPTION);
-           }
-                    } catch (Exception e) {
+
+    private void modificar(Medicamentos m) {
+        try {
+            if (obMedic.modificarMedicamento(m)) {
+                JOptionPane.showMessageDialog(null, "Se a modificado correctamento los datos", "ATENCION", JOptionPane.OK_OPTION);
+            }
+        } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "No se puede modificar", "ATENCION", JOptionPane.ERROR_MESSAGE);
-        } 
-}
+        }
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -126,7 +128,7 @@ private void modificar(Medicamentos m){
         btnEditarMedicamento = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblMedicamentos = new javax.swing.JTable();
-        btnBuscarMedicamento = new javax.swing.JButton();
+        btnEliminarMedicamento = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
 
         jFormattedTextField1.setText("jFormattedTextField1");
@@ -297,9 +299,14 @@ private void modificar(Medicamentos m){
         });
         jScrollPane1.setViewportView(tblMedicamentos);
 
-        btnBuscarMedicamento.setFont(new java.awt.Font("Microsoft JhengHei UI", 1, 12)); // NOI18N
-        btnBuscarMedicamento.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMG/Sistema/search.png"))); // NOI18N
-        btnBuscarMedicamento.setText("BUSCAR");
+        btnEliminarMedicamento.setFont(new java.awt.Font("Microsoft JhengHei UI", 1, 12)); // NOI18N
+        btnEliminarMedicamento.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMG/Sistema/search.png"))); // NOI18N
+        btnEliminarMedicamento.setText("ELIMINAR");
+        btnEliminarMedicamento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarMedicamentoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -312,7 +319,7 @@ private void modificar(Medicamentos m){
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(txtBusquedaMedicamento, javax.swing.GroupLayout.PREFERRED_SIZE, 434, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnBuscarMedicamento)
+                        .addComponent(btnEliminarMedicamento)
                         .addGap(18, 18, 18)
                         .addComponent(btnEditarMedicamento)))
                 .addContainerGap())
@@ -324,7 +331,7 @@ private void modificar(Medicamentos m){
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtBusquedaMedicamento, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnEditarMedicamento)
-                    .addComponent(btnBuscarMedicamento))
+                    .addComponent(btnEliminarMedicamento))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 105, Short.MAX_VALUE)
                 .addContainerGap())
@@ -440,7 +447,7 @@ private void modificar(Medicamentos m){
 
     private void tblMedicamentosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblMedicamentosMouseClicked
         // TODO add your handling code here:
-        
+
         Medicamentos m;
         //Obtemos la fila a la q pertenece el medicamento
         int selection = tblMedicamentos.rowAtPoint(evt.getPoint());
@@ -493,16 +500,15 @@ private void modificar(Medicamentos m){
         listMedicamentos.clear();
         //Limpiamos la tabla
         limpiarTabla();
-       //Volvemos llenar la tabla con los datos
+        //Volvemos llenar la tabla con los datos
         llenarTabla();
-        
-      
-        
+
+
     }//GEN-LAST:event_btnEditarMedicamentoActionPerformed
 
     private void btnIngresarMedicamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarMedicamentoActionPerformed
         // TODO add your handling code here:
-         // TODO add your handling code here:
+        // TODO add your handling code here:
         SimpleDateFormat fechaFormato = new SimpleDateFormat("yyyy-MM-dd");
         Date fechaElab = null;
         Date fechaCaduc = null;
@@ -523,10 +529,10 @@ private void modificar(Medicamentos m){
                 fechaElab,
                 fechaCaduc,
                 this.txtLote.getText()
-       );
-         System.out.println(objMedicamentos.toString()); //una demostracion de que se esta mandando bien los datos
+        );
+        System.out.println(objMedicamentos.toString()); //una demostracion de que se esta mandando bien los datos
         try {
-            objObtenerMedic.insertarArticulo(objMedicamentos);
+            obMedic.insertarMedicamento(objMedicamentos);
         } catch (SQLException ex) {
             Logger.getLogger(ModuloProductos.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
@@ -535,9 +541,38 @@ private void modificar(Medicamentos m){
         listMedicamentos.clear();
         //Limpiamos la tabla
         limpiarTabla();
-       //Volvemos llenar la tabla con los datos
+        //Volvemos llenar la tabla con los datos
         llenarTabla();
     }//GEN-LAST:event_btnIngresarMedicamentoActionPerformed
+
+    private void btnEliminarMedicamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarMedicamentoActionPerformed
+        // TODO add your handling code here:
+       
+        int descision = JOptionPane.showConfirmDialog(null, " Desea eliminar este producto?");
+            if (descision == JOptionPane.YES_OPTION) {
+            try {
+                if (obMedic.eliminarMedicamento(idSelect)) {
+                    JOptionPane.showMessageDialog(null,"Producto Eliminado");
+                }
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(ModuloProductos.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
+                Logger.getLogger(ModuloProductos.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            } else if (descision == JOptionPane.NO_OPTION) {
+                JOptionPane.showMessageDialog(null, "OK");
+
+            }
+        
+        
+        
+       
+        listMedicamentos.clear();
+        //Limpiamos la tabla
+        limpiarTabla();
+        //Volvemos llenar la tabla con los datos
+        llenarTabla();
+    }//GEN-LAST:event_btnEliminarMedicamentoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -576,9 +611,9 @@ private void modificar(Medicamentos m){
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnBuscarMedicamento;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnEditarMedicamento;
+    private javax.swing.JButton btnEliminarMedicamento;
     private javax.swing.JButton btnIngresarMedicamento;
     private javax.swing.JButton btnRealizarComposicion;
     private javax.swing.JDesktopPane jDesktopPane1;

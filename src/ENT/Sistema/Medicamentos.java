@@ -6,6 +6,7 @@
 package ENT.Sistema;
 
 import java.sql.Date;
+import java.util.ArrayList;
 
 /**
  *
@@ -19,6 +20,7 @@ public class Medicamentos {
     private Date fechaElab;
     private Date fecha_Expira;
     private String lote;
+    private ArrayList<Compone>listCompone;
 
     public Medicamentos() {
     }
@@ -30,6 +32,7 @@ public class Medicamentos {
         this.existenciTot = existenciTot;
         this.fechaElab = fechaElab;
         this.fecha_Expira = fecha_Expira;
+        this.listCompone=null;
         this.lote = lote;
     }
 
@@ -87,6 +90,14 @@ public class Medicamentos {
 
     public void setLote(String lote) {
         this.lote = lote;
+    }
+
+    public ArrayList<Compone> getListCompone() {
+        return listCompone;
+    }
+
+    public void setListCompone(ArrayList<Compone> listCompone) {
+        this.listCompone = listCompone;
     }
 
     @Override

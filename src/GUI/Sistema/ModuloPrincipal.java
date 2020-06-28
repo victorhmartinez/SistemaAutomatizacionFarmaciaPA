@@ -17,6 +17,7 @@ public class ModuloPrincipal extends javax.swing.JFrame {
     public ModuloPrincipal() {
         initComponents();
         this.setExtendedState(MAXIMIZED_BOTH);
+        setTitle("FARMACIA 'PRIMEROS AUXILIOS' ");
     }
 
     /**
@@ -42,7 +43,7 @@ public class ModuloPrincipal extends javax.swing.JFrame {
         jdpescritorio.setBackground(new java.awt.Color(174, 204, 206));
 
         jLabel5.setFont(new java.awt.Font("Perpetua Titling MT", 1, 16)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(100, 41, 41));
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("USUARIO: ADMINISTRADOR");
         jdpescritorio.add(jLabel5);
         jLabel5.setBounds(20, 640, 250, 20);
@@ -62,6 +63,11 @@ public class ModuloPrincipal extends javax.swing.JFrame {
         btnProductos.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         btnProductos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMG/Sistema/pastillas.png"))); // NOI18N
         btnProductos.setText("PRODUCTOS");
+        btnProductos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnProductosMouseClicked(evt);
+            }
+        });
         jdpescritorio.add(btnProductos);
         btnProductos.setBounds(20, 30, 200, 50);
 
@@ -89,6 +95,12 @@ public class ModuloPrincipal extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnProductosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnProductosMouseClicked
+        // TODO add your handling code here:
+        ModuloProductos objMedicamentos = new ModuloProductos();
+        objMedicamentos.setVisible(true);
+    }//GEN-LAST:event_btnProductosMouseClicked
 
     /**
      * @param args the command line arguments

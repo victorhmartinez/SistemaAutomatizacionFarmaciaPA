@@ -5,7 +5,6 @@
  */
 package LOG.Sistema;
 
-
 import DAT.SISTEMA.DATMedicamentos;
 import ENT.Sistema.Medicamentos;
 import java.io.IOException;
@@ -18,10 +17,12 @@ import java.util.ArrayList;
  * @author Usuario
  */
 public class ObtenerMedicamentos {
-        public void getAllMedicamentos(ArrayList<Medicamentos> listMedicamentos) throws IOException, ClassNotFoundException, SQLException {
+ DATMedicamentos datMedicamento = new DATMedicamentos();
+    public void getAllMedicamentos(ArrayList<Medicamentos> listMedicamentos)
+            throws IOException, ClassNotFoundException, SQLException {
         //creamos un objecto de tip DATcliente
 
-            DATMedicamentos datMedicamento = new DATMedicamentos();
+       
         //Creamos un resultSet para  par obtener todo los clientes de la base de datos
 
         ResultSet rs = datMedicamento.getAllMedicamentos();
@@ -29,12 +30,17 @@ public class ObtenerMedicamentos {
 
         while (rs.next()) {
             //Creamos un objeto de tipo Medicamentos
-            Medicamentos objMedicamento= new  Medicamentos(rs.getInt("idMedicamento"), rs.getString("nombreMedic"), rs.getDouble("precioMedic"), rs.getInt("existenciTot"), rs.getDate("fechaElab"), rs.getDate("fechaExpira"), rs.getString("lote"));
-             listMedicamentos.add(objMedicamento);
+            Medicamentos objMedicamento = new Medicamentos(rs.getInt("idMedicamento"),
+                    rs.getString("nombreMedic"), rs.getDouble("precioMedic"), rs.getInt("existenciTot"),
+                    rs.getDate("fechaElab"), rs.getDate("fechaExpira"), rs.getString("lote"));
+            listMedicamentos.add(objMedicamento);
         }
-       
-    
-   
 
     }
+
+    public void insertarArticulo(Medicamentos objMedic) throws SQLException, ClassNotFoundException {
+        datMedicamento.insertarMedicamento(objMedic);
+
+    }
+
 }

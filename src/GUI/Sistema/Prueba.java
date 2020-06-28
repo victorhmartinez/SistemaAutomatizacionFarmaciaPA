@@ -3,19 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package sistemaautomatizacionfarmacia;
+package GUI.Sistema;
 
 /**
  *
  * @author Usuario
  */
-public class SistemaAutomatizacionFarmacia {
-
-    /**
-     * @param args the command line arguments
-     */
+public class Prueba {
     public static void main(String[] args) {
-        // TODO code application logic here
+        System.out.println("Hola");
     }
-    
 }

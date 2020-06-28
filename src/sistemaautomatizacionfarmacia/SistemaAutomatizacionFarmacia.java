@@ -22,6 +22,7 @@ public class SistemaAutomatizacionFarmacia {
         // TODO code application logic here
              ArrayList<Medicamentos> listMedicamentos = new ArrayList<>();
         ObtenerMedicamentos objMe= new ObtenerMedicamentos();
+        System.out.println("Holllaaaa");
         try {
             objMe.getAllMedicamentos(listMedicamentos);
         } catch (Exception e) {

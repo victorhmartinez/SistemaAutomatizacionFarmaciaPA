@@ -88,5 +88,10 @@ public class Medicamentos {
     public void setLote(String lote) {
         this.lote = lote;
     }
+
+    @Override
+    public String toString() {
+        return "Medicamentos{" + "idMedicamento=" + idMedicamento + ", nombreMedic=" + nombreMedic + ", precioMedic=" + precioMedic + ", existenciTot=" + existenciTot + ", fechaElab=" + fechaElab + ", fecha_Expira=" + fecha_Expira + ", lote=" + lote + '}';
+    }
     
 }

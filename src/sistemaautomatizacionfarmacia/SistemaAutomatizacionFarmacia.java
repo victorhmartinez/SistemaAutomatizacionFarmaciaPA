@@ -5,6 +5,10 @@
  */
 package sistemaautomatizacionfarmacia;
 
+import ENT.Sistema.Medicamentos;
+import LOG.Sistema.ObtenerMedicamentos;
+import java.util.ArrayList;
+
 /**
  *
  * @author Usuario
@@ -16,6 +20,16 @@ public class SistemaAutomatizacionFarmacia {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+             ArrayList<Medicamentos> listMedicamentos = new ArrayList<>();
+        ObtenerMedicamentos objMe= new ObtenerMedicamentos();
+        try {
+            objMe.getAllMedicamentos(listMedicamentos);
+        } catch (Exception e) {
+            System.out.println("ERROR"+e);
+        } 
+        for (Medicamentos m : listMedicamentos) {
+            System.out.println("MEdicamento"+m);
+        }
     }
     
 }

@@ -17,13 +17,13 @@ public class DATMedicamentos {
 
     public ResultSet getAllMedicamentos() throws SQLException {
         Statement consulta = conecta.conectarBD().createStatement();
-        String sql = "SELECT * FROM productos";
+        String sql = "SELECT * FROM medicamento";
         return consulta.executeQuery(sql);
     }
 
     public ResultSet getOneMedicamento(int idProducto) throws SQLException {
         Statement consulta = conecta.conectarBD().createStatement();
-        String sql = "SELECT * FROM productos=" + idProducto;
+        String sql = "SELECT * FROM medicamenti WHERE idMedicamento =" + idProducto;
         return consulta.executeQuery(sql);
     }
 

@@ -93,6 +93,15 @@ public class ModuloProductos extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "No se puede modificar", "ATENCION", JOptionPane.ERROR_MESSAGE);
         }
     }
+    private void limpiar(){
+        txtNombreMedicamento.setText("");
+        txtExistenciaTotal.setText("");
+        txtFechaElabor.setText("");
+        txtFechaExpiracion.setText("");
+        txtPrecioMedicamento.setText("");
+        txtLote.setText("");
+        
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -148,6 +157,8 @@ public class ModuloProductos extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Microsoft JhengHei UI", 0, 12)); // NOI18N
         jLabel1.setText("Nombre:");
 
+        txtNombreMedicamento.setToolTipText("");
+
         jLabel2.setFont(new java.awt.Font("Microsoft JhengHei UI", 0, 12)); // NOI18N
         jLabel2.setText("Precio:");
 
@@ -169,6 +180,11 @@ public class ModuloProductos extends javax.swing.JFrame {
         btnCancelar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnCancelarMouseClicked(evt);
+            }
+        });
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
             }
         });
 
@@ -502,7 +518,7 @@ public class ModuloProductos extends javax.swing.JFrame {
         limpiarTabla();
         //Volvemos llenar la tabla con los datos
         llenarTabla();
-
+ limpiar();
 
     }//GEN-LAST:event_btnEditarMedicamentoActionPerformed
 
@@ -543,6 +559,7 @@ public class ModuloProductos extends javax.swing.JFrame {
         limpiarTabla();
         //Volvemos llenar la tabla con los datos
         llenarTabla();
+        limpiar();
     }//GEN-LAST:event_btnIngresarMedicamentoActionPerformed
 
     private void btnEliminarMedicamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarMedicamentoActionPerformed
@@ -572,7 +589,13 @@ public class ModuloProductos extends javax.swing.JFrame {
         limpiarTabla();
         //Volvemos llenar la tabla con los datos
         llenarTabla();
+         limpiar();
     }//GEN-LAST:event_btnEliminarMedicamentoActionPerformed
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        // TODO add your handling code here:
+         limpiar();
+    }//GEN-LAST:event_btnCancelarActionPerformed
 
     /**
      * @param args the command line arguments

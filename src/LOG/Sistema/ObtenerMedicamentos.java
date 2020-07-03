@@ -7,6 +7,7 @@ package LOG.Sistema;
 
 import DAT.SISTEMA.DATMedicamentos;
 import ENT.Sistema.Medicamentos;
+import ENT.Sistema.Monodroga;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -69,4 +70,41 @@ public class ObtenerMedicamentos {
         }else
             return true;
     }
+//Monodrogas
+    public void getAllMonodroga(ArrayList<Monodroga>listMonodroga) throws SQLException{
+    ResultSet rs= datMedicamento.getAllMonodroga();
+    while(rs.next()){
+        //Creamos el objeto monodroga
+        Monodroga objMonodroga = new  Monodroga(rs.getInt("idMonoDroga"), rs.getString("MonoDrogaNombre"));
+        listMonodroga.add(objMonodroga);
+    }
 }
+    public Monodroga getOneMonodroga(ArrayList<Monodroga> listMonodroga, int id) {
+        for (Monodroga m : listMonodroga) {
+            if (m.getIdMonoDroga()== id) {
+                return m;
+            }
+        }
+        return null;
+    }
+    public void ingresarMonodroga(Monodroga objMonodroga) throws SQLException{
+        datMedicamento.ingresarMonodroga(objMonodroga);
+    }
+    public boolean modificar(Monodroga objMonodroga) throws SQLException{
+         int resultado = datMedicamento.modificarMonodroga(objMonodroga);
+        if (resultado == 0) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+    public boolean  eliminarMonodroga(int idMonodroga) throws SQLException, ClassNotFoundException{
+           if (datMedicamento.eliminarMonodroga(idMonodroga)==0) {
+            return false;
+        }else
+            return true;
+    }
+}
+    
+
+

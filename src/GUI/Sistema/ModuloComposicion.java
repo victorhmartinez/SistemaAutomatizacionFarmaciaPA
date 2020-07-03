@@ -5,6 +5,13 @@
  */
 package GUI.Sistema;
 
+import ENT.Sistema.Medicamentos;
+import ENT.Sistema.Monodroga;
+import LOG.Sistema.ObtenerMedicamentos;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import javax.swing.DefaultComboBoxModel;
+
 /**
  *
  * @author Usuario
@@ -14,12 +21,46 @@ public class ModuloComposicion extends javax.swing.JFrame {
     /**
      * Creates new form Monodroga
      */
-    ModuloMonodrogas objMonodrogas = new ModuloMonodrogas();
+   // ModuloMonodrogas objMonodrogas = new ModuloMonodrogas();
+    ObtenerMedicamentos obMedicamentos = new ObtenerMedicamentos();
     public ModuloComposicion() {
         initComponents();
         setLocationRelativeTo(null);   
         setTitle("Composición");
+       cargarMedicamentos();
+       cargarMonodroga();
     }
+    private  void cargarMedicamentos(){
+        ArrayList<Medicamentos>  listMedicamentos = new ArrayList<>();
+         try {
+            obMedicamentos.getAllMedicamentos(listMedicamentos);
+             DefaultComboBoxModel modeloComboMedicamento = new DefaultComboBoxModel();
+
+            for (Medicamentos medicamento : listMedicamentos) {
+                modeloComboMedicamento.addElement(medicamento.getNombreMedic());
+            }
+            cmbMedicamento.setModel(modeloComboMedicamento);
+           
+        } catch (Exception ex) {
+            System.err.println("ERROR" + ex);
+        }
+    }
+     private void cargarMonodroga(){
+          ArrayList<Monodroga>  listMonodroga = new ArrayList<>();
+         try {
+            obMedicamentos.getAllMonodroga(listMonodroga);
+             DefaultComboBoxModel modeloComboMonodroga = new DefaultComboBoxModel();
+
+            for (Monodroga monodroga : listMonodroga) {
+                modeloComboMonodroga.addElement(monodroga.getMonoDrogaNombre());
+            }
+            cmbMonodroga.setModel(modeloComboMonodroga);
+           
+        } catch (Exception ex) {
+            System.err.println("ERROR" + ex);
+        }
+    }
+   
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -257,7 +298,7 @@ public class ModuloComposicion extends javax.swing.JFrame {
     private void btnNuevoMonodrogaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnNuevoMonodrogaMouseClicked
         // TODO add your handling code here:
 
-        objMonodrogas.setVisible(true);
+//        objMonodrogas.setVisible(true);
     }//GEN-LAST:event_btnNuevoMonodrogaMouseClicked
 
     /**

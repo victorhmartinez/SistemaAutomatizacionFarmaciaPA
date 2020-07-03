@@ -77,6 +77,11 @@ public class Interfaz1_1 extends javax.swing.JFrame {
         jButtonSesión.setBackground(new java.awt.Color(0, 51, 255));
         jButtonSesión.setForeground(new java.awt.Color(255, 255, 255));
         jButtonSesión.setText("Iniciar Sesión");
+        jButtonSesión.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonSesiónActionPerformed(evt);
+            }
+        });
         getContentPane().add(jButtonSesión, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 260, -1, -1));
 
         jLabelFondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/83212772-tubos-de-ensaio-com-comprimidos-e-ícones-médicos-close-up-conceito-de-cuidados-de-saúde-.jpg"))); // NOI18N
@@ -90,6 +95,10 @@ public class Interfaz1_1 extends javax.swing.JFrame {
 
         System.exit(0);        // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButtonSesiónActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSesiónActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButtonSesiónActionPerformed
 
     /**
      * @param args the command line arguments

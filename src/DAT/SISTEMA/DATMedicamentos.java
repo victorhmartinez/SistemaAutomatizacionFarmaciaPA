@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import javax.swing.JOptionPane;
 import ENT.Sistema.Medicamentos;
+import ENT.Sistema.Monodroga;
 import java.awt.HeadlessException;
 import java.sql.PreparedStatement;
 
@@ -64,21 +65,44 @@ public class DATMedicamentos {
         return intRetorno;
     }
 
-    public int insertarMedicMonoDro(Medicamentos objMedicamentos) throws SQLException {
+
+    public ResultSet getAllMonodroga() throws SQLException {
+        Statement consulta = conecta.conectarBD().createStatement();
+        String sql = "SELECT * FROM monodroga";
+        return consulta.executeQuery(sql);
+    }
+
+    public int ingresarMonodroga(Monodroga objMono) throws SQLException {
         int intRetorno = 0;
         Statement st = conecta.conectarBD().createStatement();
-        String Sentencia = "insert into monodroga(MonoDrogaNombre)"
-                + "VALUES ('"
-                + objMedicamentos.getNombreMedic() + "',"
-                + objMedicamentos.getPrecioMedic() + ","
-                + objMedicamentos.getExistenciTot() + ",'"
-                + objMedicamentos.getFechaElab() + "','"
-                + objMedicamentos.getFecha_Expira() + "','"
-                + objMedicamentos.getLote()
+        String query = "INSERT INTO monodroga(idMonoDroga,MonoDrogaNombre)"
+                + "VALUES ("
+                + objMono.getIdMonoDroga() + ",'"
+                + objMono.getMonoDrogaNombre()
                 + "')";
+        intRetorno = st.executeUpdate(query); // envia la sentencia a la bd
         JOptionPane.showMessageDialog(null, "Agregado con EXITO");
-        intRetorno = st.executeUpdate(Sentencia); // envia la sentencia a la bd
         return intRetorno;
+    }
+    public int modificarMonodroga(Monodroga objMono) throws SQLException{
+         Statement consulta = conecta.conectarBD().createStatement();
+
+        int resultado = 0;
+        String sql = "UPDATE monodroga SET MonoDrogaNombre = '" + objMono.getMonoDrogaNombre()
+                + "'WHERE  idMonoDroga = " + objMono.getIdMonoDroga();
+        resultado = consulta.executeUpdate(sql);
+        consulta.close();
+        return resultado;
+    }
+    public int eliminarMonodroga(int idMonodroga) throws SQLException, ClassNotFoundException {
+        Statement consulta = conecta.conectarBD().createStatement();
+
+        int resultado = 0;
+        String sql = "DELETE FROM monodroga WHERE idMonoDroga = " + idMonodroga;
+        resultado = consulta.executeUpdate(sql);
+        consulta.close();
+        return resultado;
+
     }
 
 //    public boolean eliminarMedicamento(int idMedicamento) {
@@ -95,8 +119,6 @@ public class DATMedicamentos {
 //            
 //        }
 //    }
-    
-    
 //    public int eliminarMedicamento(int idMedicamento) throws ClassNotFoundException, SQLException {
 //        Statement st = conecta.conectarBD().createStatement();
 //        int resultado = 0;
@@ -130,15 +152,14 @@ public class DATMedicamentos {
 //        }
 //        return resultado;
 //    }
-    
-    public int eliminarMedicamento(int idMedicamento) throws SQLException,ClassNotFoundException{
-         Statement consulta = conecta.conectarBD().createStatement();
-         
-          int resultado = 0;
-          String sql = "DELETE FROM medicamento WHERE idMedicamento = "+idMedicamento;
-          resultado = consulta.executeUpdate(sql);
-          consulta.close();
-          return resultado;
-                  
+    public int eliminarMedicamento(int idMedicamento) throws SQLException, ClassNotFoundException {
+        Statement consulta = conecta.conectarBD().createStatement();
+
+        int resultado = 0;
+        String sql = "DELETE FROM medicamento WHERE idMedicamento = " + idMedicamento;
+        resultado = consulta.executeUpdate(sql);
+        consulta.close();
+        return resultado;
+
     }
 }

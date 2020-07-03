@@ -5,6 +5,15 @@
  */
 package GUI.Sistema;
 
+import ENT.Sistema.Monodroga;
+import LOG.Sistema.ObtenerMedicamentos;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Usuario
@@ -14,13 +23,44 @@ public class ModuloMonodrogas extends javax.swing.JFrame {
     /**
      * Creates new form Monodroga
      */
-  
+    ArrayList<Monodroga> listMonodrogas = new ArrayList<>();
+    ObtenerMedicamentos obMedica = new ObtenerMedicamentos();
+    DefaultTableModel dtm;
+    int idSelect;
+
     public ModuloMonodrogas() {
         initComponents();
-        setLocationRelativeTo(null);   
+        setLocationRelativeTo(null);
         setTitle("Monodrogas");
+        cargarTabla();
     }
 
+    private void cargarDatos(ArrayList<Monodroga> listMonodroga) {
+        try {
+            obMedica.getAllMonodroga(listMonodrogas);
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Se producido un error al cagar los datos de la base", "ATENCION", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+private void cargarTabla(){
+    cargarDatos(listMonodrogas);
+     dtm = (DefaultTableModel) tblMonodrogas.getModel();
+     Object[] tablFilas = new Object[dtm.getColumnCount()];
+        for (Monodroga monodroga : listMonodrogas) {
+            tablFilas[0]=monodroga.getIdMonoDroga();
+            tablFilas[1] = monodroga.getMonoDrogaNombre();
+             dtm.addRow(tablFilas);
+        }
+}
+  private void limpiarTabla() {
+        for (int i = 0; i < tblMonodrogas.getRowCount(); i++) {
+            dtm.removeRow(i);
+            i -= 1;
+        }
+    }
+  private void limpiarCampos(){
+      txtNombreMonodroga.setText("");
+  }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -40,6 +80,8 @@ public class ModuloMonodrogas extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblMonodrogas = new javax.swing.JTable();
         btnSalir = new javax.swing.JButton();
+        btnEditar = new javax.swing.JButton();
+        btnEliminar = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
 
@@ -53,6 +95,12 @@ public class ModuloMonodrogas extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Microsoft JhengHei UI", 0, 12)); // NOI18N
         jLabel1.setText("Nombre:");
 
+        txtNombreMonodroga.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNombreMonodrogaActionPerformed(evt);
+            }
+        });
+
         btnCancelar.setFont(new java.awt.Font("Microsoft JhengHei UI", 1, 12)); // NOI18N
         btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMG/Sistema/Cancel2.png"))); // NOI18N
         btnCancelar.setText("CANCELAR");
@@ -65,18 +113,25 @@ public class ModuloMonodrogas extends javax.swing.JFrame {
         btnIngresarMonodroga.setFont(new java.awt.Font("Microsoft JhengHei UI", 1, 12)); // NOI18N
         btnIngresarMonodroga.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMG/Sistema/insert.png"))); // NOI18N
         btnIngresarMonodroga.setText("INGRESAR");
+        btnIngresarMonodroga.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnIngresarMonodrogaActionPerformed(evt);
+            }
+        });
 
         tblMonodrogas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null},
-                {null},
-                {null},
-                {null}
+
             },
             new String [] {
-                "Nombre"
+                "Id", "Nombre"
             }
         ));
+        tblMonodrogas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblMonodrogasMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblMonodrogas);
 
         btnSalir.setFont(new java.awt.Font("Microsoft JhengHei UI", 1, 12)); // NOI18N
@@ -85,6 +140,34 @@ public class ModuloMonodrogas extends javax.swing.JFrame {
         btnSalir.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnSalirMouseClicked(evt);
+            }
+        });
+
+        btnEditar.setFont(new java.awt.Font("Microsoft JhengHei UI", 1, 12)); // NOI18N
+        btnEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMG/Sistema/cancel.png"))); // NOI18N
+        btnEditar.setText("EDITAR");
+        btnEditar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnEditarMouseClicked(evt);
+            }
+        });
+        btnEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarActionPerformed(evt);
+            }
+        });
+
+        btnEliminar.setFont(new java.awt.Font("Microsoft JhengHei UI", 1, 12)); // NOI18N
+        btnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMG/Sistema/cancel.png"))); // NOI18N
+        btnEliminar.setText("ELIMINAR");
+        btnEliminar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnEliminarMouseClicked(evt);
+            }
+        });
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
             }
         });
 
@@ -108,6 +191,10 @@ public class ModuloMonodrogas extends javax.swing.JFrame {
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnEliminar)
+                .addGap(18, 18, 18)
+                .addComponent(btnEditar)
+                .addGap(33, 33, 33)
                 .addComponent(btnSalir)
                 .addGap(19, 19, 19))
         );
@@ -121,9 +208,12 @@ public class ModuloMonodrogas extends javax.swing.JFrame {
                     .addComponent(btnIngresarMonodroga)
                     .addComponent(btnCancelar))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 105, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 133, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnSalir)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnSalir)
+                    .addComponent(btnEditar)
+                    .addComponent(btnEliminar))
                 .addGap(7, 7, 7))
         );
 
@@ -202,7 +292,7 @@ public class ModuloMonodrogas extends javax.swing.JFrame {
         // TODO add your handling code here:
         txtNombreMonodroga.setText("");
         this.setVisible(false);
-        
+
     }//GEN-LAST:event_btnCancelarMouseClicked
 
     private void btnSalirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSalirMouseClicked
@@ -210,6 +300,102 @@ public class ModuloMonodrogas extends javax.swing.JFrame {
         System.exit(0);
 
     }//GEN-LAST:event_btnSalirMouseClicked
+
+    private void txtNombreMonodrogaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreMonodrogaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNombreMonodrogaActionPerformed
+
+    private void btnEditarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditarMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnEditarMouseClicked
+
+    private void btnIngresarMonodrogaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarMonodrogaActionPerformed
+        // TODO add your handling code here:
+        Monodroga objMonodroga=new Monodroga(0, txtNombreMonodroga.getText());
+        try {
+            obMedica.ingresarMonodroga(objMonodroga);
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null,"No se pudo ingresar los datos","ATENCION",JOptionPane.ERROR_MESSAGE);
+        }
+           listMonodrogas.clear();
+        //Limpiamos la tabla
+        limpiarTabla();
+        //Volvemos llenar la tabla con los datos
+        cargarTabla();
+        limpiarCampos();
+    }//GEN-LAST:event_btnIngresarMonodrogaActionPerformed
+
+    private void btnEliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnEliminarMouseClicked
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+           int descision = JOptionPane.showConfirmDialog(null, " Desea eliminar este Monodroga?");
+            if (descision == JOptionPane.YES_OPTION) {
+            try {
+                if (obMedica.eliminarMonodroga(idSelect)) {
+                    JOptionPane.showMessageDialog(null,"Monodroga Eliminado");
+                }
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(ModuloProductos.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
+               JOptionPane.showMessageDialog(null, "Error no se pudo eliminar","ATENCION",JOptionPane.ERROR_MESSAGE);
+            }
+            } else if (descision == JOptionPane.NO_OPTION) {
+                JOptionPane.showMessageDialog(null, "OK");
+
+            }  
+       
+        listMonodrogas.clear();
+        //Limpiamos la tabla
+        limpiarTabla();
+        //Volvemos llenar la tabla con los datos
+        cargarTabla();
+         limpiarCampos();
+        
+    }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void tblMonodrogasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblMonodrogasMouseClicked
+       Monodroga m;
+        //Obtemos la fila a la q pertenece el medicamento
+        int selection = tblMonodrogas.rowAtPoint(evt.getPoint());
+        //Obtenemos el id del medicamento seleccionado
+        String id = String.valueOf(tblMonodrogas.getValueAt(selection, 0));
+        //Lo convertimos a  int para poder buscar
+        idSelect = Integer.parseInt(id);
+       
+        //Obtemos el medicamento
+        m = obMedica.getOneMonodroga(listMonodrogas, idSelect);
+        //Presentamos los datos del medicamento en los txt
+        txtNombreMonodroga.setText(m.getMonoDrogaNombre());
+        
+    }//GEN-LAST:event_tblMonodrogasMouseClicked
+
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+    Monodroga m;
+        m = obMedica.getOneMonodroga(listMonodrogas, idSelect);
+        //Establecemos los nuevos valores al medicamento
+        m.setMonoDrogaNombre(txtNombreMonodroga.getText());
+          int descision = JOptionPane.showConfirmDialog(null, " Desea editar esta Monodroga?");
+          if (descision == JOptionPane.YES_OPTION){
+        try {
+            if (obMedica.modificar(m)) {
+                JOptionPane.showMessageDialog(null,"Monodroga Modificada");
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null,"No se pudo Modificar");
+        }
+          }else if (descision == JOptionPane.NO_OPTION) {
+                JOptionPane.showMessageDialog(null, "OK");
+
+            }
+      listMonodrogas.clear();
+        //Limpiamos la tabla
+        limpiarTabla();
+        //Volvemos llenar la tabla con los datos
+        cargarTabla();
+         limpiarCampos();
+    }//GEN-LAST:event_btnEditarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -249,6 +435,8 @@ public class ModuloMonodrogas extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
+    private javax.swing.JButton btnEditar;
+    private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnIngresarMonodroga;
     private javax.swing.JButton btnSalir;
     private javax.swing.JDesktopPane jDesktopPane1;

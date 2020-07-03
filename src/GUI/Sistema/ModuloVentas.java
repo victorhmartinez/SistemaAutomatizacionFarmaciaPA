@@ -76,6 +76,15 @@ public class ModuloVentas extends javax.swing.JFrame {
     private void initComponents() {
 
         jFormattedTextField1 = new javax.swing.JFormattedTextField();
+        jDialog1 = new javax.swing.JDialog();
+        jLabelRegistro = new javax.swing.JLabel();
+        jButtonBuscador = new javax.swing.JButton();
+        jLabelNombre = new javax.swing.JLabel();
+        jButtonAgregar = new javax.swing.JButton();
+        IngresoNombre = new javax.swing.JTextField();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        jLabel2Fondo = new javax.swing.JLabel();
         jDesktopPane1 = new javax.swing.JDesktopPane();
         jLabel4 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
@@ -108,6 +117,53 @@ public class ModuloVentas extends javax.swing.JFrame {
 
         jFormattedTextField1.setText("jFormattedTextField1");
 
+        jDialog1.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabelRegistro.setBackground(new java.awt.Color(0, 0, 0));
+        jLabelRegistro.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jLabelRegistro.setForeground(new java.awt.Color(255, 255, 255));
+        jLabelRegistro.setText("CLIENTES REGISTRADOS");
+        jDialog1.getContentPane().add(jLabelRegistro, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 40, -1, 30));
+
+        jButtonBuscador.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMG/Sistema/searchperson.png"))); // NOI18N
+        jDialog1.getContentPane().add(jButtonBuscador, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 140, 40, 30));
+
+        jLabelNombre.setBackground(new java.awt.Color(255, 255, 255));
+        jLabelNombre.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jLabelNombre.setForeground(new java.awt.Color(255, 255, 255));
+        jLabelNombre.setText("Cédula");
+        jDialog1.getContentPane().add(jLabelNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 100, 180, 40));
+
+        jButtonAgregar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMG/Sistema/accept.png"))); // NOI18N
+        jButtonAgregar.setText("Agregar");
+        jDialog1.getContentPane().add(jButtonAgregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 390, -1, -1));
+        jDialog1.getContentPane().add(IngresoNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 140, 450, 30));
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Nombre", "Apellido", "Cédula", "Detalle"
+            }
+        ));
+        jScrollPane2.setViewportView(jTable1);
+
+        jDialog1.getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 200, 530, 180));
+
+        jLabel2Fondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMG/Sistema/Fondo.jpg"))); // NOI18N
+        jLabel2Fondo.setText("jLabel2");
+        jDialog1.getContentPane().add(jLabel2Fondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(-220, -110, 1030, 670));
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -138,6 +194,11 @@ public class ModuloVentas extends javax.swing.JFrame {
         jLabel6.setText("Nombre Cliente:");
 
         btnBuscarCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMG/Sistema/searchperson.png"))); // NOI18N
+        btnBuscarCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarClienteActionPerformed(evt);
+            }
+        });
 
         btnBuscarMedicamento.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMG/Sistema/searchmedicine.png"))); // NOI18N
 
@@ -178,7 +239,6 @@ public class ModuloVentas extends javax.swing.JFrame {
                                     .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(0, 0, 0)
                                 .addComponent(jLabel6)
                                 .addGap(34, 34, 34)
                                 .addComponent(txtNombreCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -205,7 +265,6 @@ public class ModuloVentas extends javax.swing.JFrame {
                     .addComponent(txtCedulaCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtNombreCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -313,10 +372,11 @@ public class ModuloVentas extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnCancelar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnEditarVenta)
-                    .addComponent(btnRealizarVenta))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnCancelar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnEditarVenta)
+                        .addComponent(btnRealizarVenta)))
                 .addContainerGap())
         );
 
@@ -435,6 +495,17 @@ public class ModuloVentas extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnImprimirVentaMouseClicked
 
+    private void btnBuscarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarClienteActionPerformed
+        
+// TODO add your handling code here:
+    jDialog1.setSize(800,490); 
+    jDialog1.setLocationRelativeTo(null);
+    jDialog1.setModal(true);
+    jDialog1.setVisible(true);
+      
+        
+    }//GEN-LAST:event_btnBuscarClienteActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -474,6 +545,7 @@ public class ModuloVentas extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField IngresoNombre;
     private javax.swing.JButton btnBuscarCliente;
     private javax.swing.JButton btnBuscarMedicamento;
     private javax.swing.JButton btnCancelar;
@@ -481,12 +553,16 @@ public class ModuloVentas extends javax.swing.JFrame {
     private javax.swing.JButton btnImprimirVenta;
     private javax.swing.JButton btnRealizarVenta;
     private javax.swing.JButton btnSalir;
+    private javax.swing.JButton jButtonAgregar;
+    private javax.swing.JButton jButtonBuscador;
     private javax.swing.JDesktopPane jDesktopPane1;
+    private javax.swing.JDialog jDialog1;
     private javax.swing.JFormattedTextField jFormattedTextField1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel2Fondo;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -494,10 +570,14 @@ public class ModuloVentas extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JLabel jLabelNombre;
+    private javax.swing.JLabel jLabelRegistro;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable jTable1;
     private javax.swing.JTable tblPreVenta;
     private javax.swing.JTextField txtCedulaCliente;
     private javax.swing.JTextField txtCorreo;

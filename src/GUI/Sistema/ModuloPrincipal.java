@@ -33,6 +33,7 @@ public class ModuloPrincipal extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
+        btnVentas = new javax.swing.JButton();
         btnProductos = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         menuCliente = new javax.swing.JMenu();
@@ -59,6 +60,17 @@ public class ModuloPrincipal extends javax.swing.JFrame {
         jLabel1.setToolTipText("");
         jdpescritorio.add(jLabel1);
         jLabel1.setBounds(-10, 110, 1650, 490);
+
+        btnVentas.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        btnVentas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMG/Sistema/buy.png"))); // NOI18N
+        btnVentas.setText("VENTAS");
+        btnVentas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnVentasMouseClicked(evt);
+            }
+        });
+        jdpescritorio.add(btnVentas);
+        btnVentas.setBounds(260, 30, 200, 50);
 
         btnProductos.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         btnProductos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMG/Sistema/pastillas.png"))); // NOI18N
@@ -95,6 +107,13 @@ public class ModuloPrincipal extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnVentasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVentasMouseClicked
+
+        // TODO add your handling code here:
+        ModuloVentas objVentas = new ModuloVentas();
+        objVentas.setVisible(true);
+    }//GEN-LAST:event_btnVentasMouseClicked
 
     private void btnProductosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnProductosMouseClicked
         // TODO add your handling code here:
@@ -142,6 +161,7 @@ public class ModuloPrincipal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnProductos;
+    private javax.swing.JButton btnVentas;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;

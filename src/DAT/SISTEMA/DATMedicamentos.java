@@ -104,54 +104,6 @@ public class DATMedicamentos {
         return resultado;
 
     }
-
-//    public boolean eliminarMedicamento(int idMedicamento) {
-//
-//        String Sentencia = "DELETE FROM medicamento WHERE idMedicamento = ?";
-//        try {
-//            ps = conecta.conectarBD().prepareStatement(Sentencia);
-//            ps.setInt(0, idMedicamento);
-//            ps.execute();
-//            return true;
-//        } catch (Exception e) {
-//            System.err.println("Hola ERROR" + e);
-//            return false;
-//            
-//        }
-//    }
-//    public int eliminarMedicamento(int idMedicamento) throws ClassNotFoundException, SQLException {
-//        Statement st = conecta.conectarBD().createStatement();
-//        int resultado = 0;
-//        int confirmar = JOptionPane.showConfirmDialog(null, "Realmente desea eliminar?");
-//        if (confirmar == JOptionPane.OK_OPTION) {
-//
-//            try {
-//                String Sentencia = "DELETE FROM medicamento WHERE  idMedicamento = ?" ;
-//                ResultSet rs = st.executeQuery(Sentencia);
-//                ps.setInt(1, idMedicamento);
-//                if (ps.executeUpdate() > 0) {
-//                    JOptionPane.showMessageDialog(null, "Se ha eliminado al Empleado");
-//                } else {
-//                    JOptionPane.showMessageDialog(null, "No se ha podido eliminar al elemento.\n "
-//                            + "Intente denuevo");
-//
-//                }
-//            } catch (HeadlessException | SQLException e) {
-//                JOptionPane.showMessageDialog(null, "No se ha podido eliminar al elemento.\n " + " Intente denuevo.\n" + e);
-//            } finally {
-//                if (conecta != null) {
-//                    try {
-//                        conecta.desconectarBD();
-//                    } catch (Exception e) {
-//                        JOptionPane.showMessageDialog(null, "Se ha producido un error a la hora de cerrar la conexion.\n " + " Con la BD.\n" + e);
-//
-//                    }
-//                }
-//            }
-//
-//        }
-//        return resultado;
-//    }
     public int eliminarMedicamento(int idMedicamento) throws SQLException, ClassNotFoundException {
         Statement consulta = conecta.conectarBD().createStatement();
 

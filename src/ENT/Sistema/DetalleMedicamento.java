@@ -47,5 +47,10 @@ public class DetalleMedicamento {
     public void setCant(int cant) {
         this.cant = cant;
     }
+
+    @Override
+    public String toString() {
+        return "DetalleMedicamento{" + "idMedicamento=" + idMedicamento + ", idDetalle=" + idDetalle + ", cant=" + cant + '}';
+    }
     
 }

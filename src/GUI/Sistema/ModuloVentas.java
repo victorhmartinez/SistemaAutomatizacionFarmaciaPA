@@ -11,6 +11,8 @@ import ENT.Sistema.Medicamentos;
 import LOG.Sistema.LogDetalle;
 import LOG.Sistema.ObtenerMedicamentos;
 import java.awt.Dimension;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
@@ -19,7 +21,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 
 /**
  *
@@ -30,12 +34,14 @@ public class ModuloVentas extends javax.swing.JFrame {
     /**
      * Creates new form ModuloProductos
      */
-    ModuloProductos objProductos = new ModuloProductos();
     ArrayList<Medicamentos> lisCarrito = new ArrayList<>();
     ArrayList<Medicamentos> lisMedicamentos = new ArrayList<>();
     ObtenerMedicamentos objMedicamentos = new ObtenerMedicamentos();
     LogDetalle objDetalle = new LogDetalle();
+    DefaultTableModel dtm;
+    TableRowSorter trs = null;
     int numDetalle;
+    double subtotalT,totalT,iva;
 
     public ModuloVentas() {
         initComponents();
@@ -50,9 +56,32 @@ public class ModuloVentas extends javax.swing.JFrame {
         this.txtNombreCliente.setEnabled(false);
         this.txtCorreo.setEnabled(false);
         this.txtDireccion.setEnabled(false);
-        this.txtFecha.setEnabled(false);
-        numDetalle = objDetalle.obtenerUltimaFactura();
+       // this.txtFecha.setEnabled(false);
+        numDetalle = objDetalle.obtenerUltimaFactura()+1;
+        cargarMedicamentos(lisMedicamentos);
+    }
 
+    private void cargarMedicamentos(ArrayList<Medicamentos> listMedicamento) {
+        try {
+            objMedicamentos.getAllMedicamentos(listMedicamento);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Se producido un error al cagar los datos de la base", "ATENCION", JOptionPane.ERROR_MESSAGE);
+        }
+        llenarTabla(listMedicamento);
+    }
+
+    private void llenarTabla(ArrayList<Medicamentos> listMedicamentos) {
+
+        dtm = (DefaultTableModel) tblDatMedicamento.getModel();
+        Object[] tablFilas = new Object[dtm.getColumnCount()];
+        for (Medicamentos medicamentos : listMedicamentos) {
+            tablFilas[0] = medicamentos.getIdMedicamento();
+            tablFilas[1] = medicamentos.getNombreMedic();
+            tablFilas[2] = medicamentos.getExistenciTot();
+            tablFilas[3] = medicamentos.getPrecioMedic();
+            dtm.addRow(tablFilas);
+
+        }
     }
 
     private void limpiar() {
@@ -82,11 +111,12 @@ public class ModuloVentas extends javax.swing.JFrame {
         m = objMedicamentos.getOneMedicamento(lisMedicamentos, idSelect);
         int cant = Integer.parseInt(String.valueOf(tblPreVenta.getValueAt(fila, 2)));
         m.setExistenciTot(m.getExistenciTot() - cant);
-        DetalleMedicamento dtMedicamento = new DetalleMedicamento(m.getIdMedicamento(), numDetalle,cant);
+        DetalleMedicamento dtMedicamento = new DetalleMedicamento(m.getIdMedicamento(), 1, cant);
+        System.out.println("Detalles: "+dtMedicamento);
         try {
             objDetalle.inserDetalleMedic(dtMedicamento);
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "ERROR DM");
+            JOptionPane.showMessageDialog(null, "ERROR DM"+ex);
         }
         lisCarrito.add(m);
 
@@ -113,16 +143,15 @@ public class ModuloVentas extends javax.swing.JFrame {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Fecha Incorrecta", "ERROR", JOptionPane.WARNING_MESSAGE);
         }
-        DetalleFactura detalle = new DetalleFactura(numDetalle, fecha, Double.parseDouble(txtSubtotal.getText()), Double.parseDouble(txtTotal.getText()), 1, 0);
+        DetalleFactura detalle = new DetalleFactura(numDetalle, fecha, Double.parseDouble(txtSubtotal.getText()), Double.parseDouble(txtTotal.getText()), 1, 1);
         try {
             objDetalle.insertDetalle(detalle);
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "ERROR");
+            JOptionPane.showMessageDialog(null, "ERROR"+ex);
         }
 
     }
 
-  
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -142,6 +171,17 @@ public class ModuloVentas extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jLabel2Fondo = new javax.swing.JLabel();
+        mostrarMedicamentos = new javax.swing.JDialog();
+        jPanel4 = new javax.swing.JPanel();
+        txtBuscarMedicamento = new javax.swing.JTextField();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        tblDatMedicamento = new javax.swing.JTable();
+        txtCant = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
+        jLabel15 = new javax.swing.JLabel();
+        jLabel16 = new javax.swing.JLabel();
+        jLabel17 = new javax.swing.JLabel();
+        lblFondo2 = new javax.swing.JLabel();
         jDesktopPane1 = new javax.swing.JDesktopPane();
         jLabel4 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
@@ -227,6 +267,61 @@ public class ModuloVentas extends javax.swing.JFrame {
         jLabel2Fondo.setText("jLabel2");
         jDialog1.getContentPane().add(jLabel2Fondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(-220, -110, 1030, 670));
 
+        mostrarMedicamentos.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+
+        jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        txtBuscarMedicamento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtBuscarMedicamentoActionPerformed(evt);
+            }
+        });
+        txtBuscarMedicamento.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtBuscarMedicamentoKeyTyped(evt);
+            }
+        });
+        jPanel4.add(txtBuscarMedicamento, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 100, 420, 30));
+
+        tblDatMedicamento.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Cod.", "Nombre", "Cant.Disponible", "Precio"
+            }
+        ));
+        jScrollPane3.setViewportView(tblDatMedicamento);
+
+        jPanel4.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 150, 450, 200));
+        jPanel4.add(txtCant, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 380, 50, 40));
+
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMG/Sistema/accept.png"))); // NOI18N
+        jButton1.setText("Agregar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        jPanel4.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 380, 120, 40));
+
+        jLabel15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMG/Sistema/search.png"))); // NOI18N
+        jPanel4.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 100, 30, 30));
+
+        jLabel16.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
+        jLabel16.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel16.setText("Productos Disponibles");
+        jPanel4.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 20, 410, 50));
+
+        jLabel17.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        jLabel17.setText("Cant.");
+        jPanel4.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 380, 50, 40));
+
+        lblFondo2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMG/Sistema/Fondo.jpg"))); // NOI18N
+        jPanel4.add(lblFondo2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 580, 440));
+
+        mostrarMedicamentos.getContentPane().add(jPanel4, java.awt.BorderLayout.CENTER);
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -276,6 +371,11 @@ public class ModuloVentas extends javax.swing.JFrame {
         jPanel2.add(btnBuscarCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(592, 79, 81, -1));
 
         btnBuscarMedicamento.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMG/Sistema/searchmedicine.png"))); // NOI18N
+        btnBuscarMedicamento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarMedicamentoActionPerformed(evt);
+            }
+        });
         jPanel2.add(btnBuscarMedicamento, new org.netbeans.lib.awtextra.AbsoluteConstraints(592, 131, 81, -1));
 
         jLabel11.setFont(new java.awt.Font("Microsoft JhengHei UI", 0, 12)); // NOI18N
@@ -437,7 +537,10 @@ public class ModuloVentas extends javax.swing.JFrame {
     }//GEN-LAST:event_tblPreVentaMouseClicked
 
     private void btnRealizarVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRealizarVentaActionPerformed
-
+       setDetalle();
+        realizarVenta();
+        objDetalle.imprimirCarrito(lisCarrito);
+        System.out.println(numDetalle);
     }//GEN-LAST:event_btnRealizarVentaActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
@@ -473,6 +576,86 @@ public class ModuloVentas extends javax.swing.JFrame {
     private void txtTotalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTotalActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtTotalActionPerformed
+
+    private void txtBuscarMedicamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBuscarMedicamentoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtBuscarMedicamentoActionPerformed
+
+    private void btnBuscarMedicamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarMedicamentoActionPerformed
+        // TODO add your handling code here:
+        mostrarMedicamentos.setSize(580, 475);
+        mostrarMedicamentos.setLocationRelativeTo(null);
+        mostrarMedicamentos.setModal(true);
+        mostrarMedicamentos.setVisible(true);
+    }//GEN-LAST:event_btnBuscarMedicamentoActionPerformed
+
+    private void txtBuscarMedicamentoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarMedicamentoKeyTyped
+        // TODO add your handling code here:
+        txtBuscarMedicamento.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                //Designamos a la fila en comluna en la que queremos buscar en este caso por nombre "1" y con lo debe compara
+                trs.setRowFilter(RowFilter.regexFilter("(?i)" + txtBuscarMedicamento.getText(), 1));
+            }
+
+        });
+        trs = new TableRowSorter(dtm);
+        tblDatMedicamento.setRowSorter(trs);
+    }//GEN-LAST:event_txtBuscarMedicamentoKeyTyped
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        int fsl = tblDatMedicamento.getSelectedRow();
+        int cant = 0;
+        int idSelect;
+      DefaultTableModel model ;
+            double  x, ivas = 0.0;
+       String codigo,nombre,cantP,precioUn,totP;
+       
+        Medicamentos m;
+        if (fsl == -1) {
+            JOptionPane.showConfirmDialog(null, "Debe seleccionar un producto");
+
+        } else {
+            if (txtCant.getText().equals("")) {
+                JOptionPane.showMessageDialog(null, "Se debe ingresar la cantidad");
+            } else {
+                cant = Integer.parseInt(txtCant.getText());
+                idSelect = Integer.parseInt(tblDatMedicamento.getValueAt(fsl, 0).toString());
+                m = objMedicamentos.getOneMedicamento(lisMedicamentos, idSelect);
+                if (objDetalle.cantDisponible(m, cant)) {
+                    System.out.println("este se va vender" + objMedicamentos.getOneMedicamento(lisMedicamentos, idSelect));
+                    codigo=String.valueOf(m.getIdMedicamento());
+                    nombre=m.getNombreMedic();
+                    cantP=String.valueOf(cant);
+                    precioUn=String.valueOf(m.getPrecioMedic());
+                    x = (Double.parseDouble(precioUn)) * cant;
+                    x=Math.round(x * 100) / 100d;
+                    totP=String.valueOf(x);
+                    //Añadimos los datos a la tabla preventa
+                    model=(DefaultTableModel) tblPreVenta.getModel();
+                    String filaEle[] = {codigo, nombre, cantP, precioUn,totP};
+                    model.addRow(filaEle);
+                    //Calculamos los valores totales de la venta
+                    totalT=totalT+x;
+                    totalT=Math.round(totalT * 100) / 100d;
+                    ivas = totalT * 0.12;
+                    iva=ivas;
+                    iva=Math.round(iva * 100) / 100d;
+                    subtotalT = totalT - ivas;
+                    subtotalT=Math.round(subtotalT * 100) / 100d;
+                    //Presentamos datos en los txt
+                    txtSubtotal.setText(String.valueOf(subtotalT));
+                    txtIVA.setText(String.valueOf(iva));
+                    txtTotal.setText(String.valueOf(totalT));
+                    System.out.println("Subtotal: "+subtotalT);
+                    System.out.println("iva: "+iva);
+                    System.out.println("Total: "+totalT);
+                }
+            }
+        }
+        txtCant.setText("");
+
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -521,6 +704,7 @@ public class ModuloVentas extends javax.swing.JFrame {
     private javax.swing.JButton btnImprimirVenta;
     private javax.swing.JButton btnRealizarVenta;
     private javax.swing.JButton btnSalir;
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButtonAgregar;
     private javax.swing.JButton jButtonBuscador;
     private javax.swing.JDesktopPane jDesktopPane1;
@@ -532,6 +716,9 @@ public class ModuloVentas extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel2Fondo;
     private javax.swing.JLabel jLabel3;
@@ -546,10 +733,17 @@ public class ModuloVentas extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTable jTable1;
+    private javax.swing.JLabel lblFondo2;
+    private javax.swing.JDialog mostrarMedicamentos;
+    private javax.swing.JTable tblDatMedicamento;
     private javax.swing.JTable tblPreVenta;
+    private javax.swing.JTextField txtBuscarMedicamento;
+    private javax.swing.JTextField txtCant;
     private javax.swing.JTextField txtCedulaCliente;
     private javax.swing.JTextField txtCorreo;
     private javax.swing.JTextField txtDireccion;

@@ -24,13 +24,13 @@ public class DATDetalles {
     ConexionBD conecta = new ConexionBD();
        public ResultSet obtenerUltimaFactura() throws SQLException {
         Statement consulta = conecta.conectarBD().createStatement();
-        String sql = "SELECT max (idDetalleFactura) NumeroDet from detallefactura";
+        String sql = "SELECT MAX(idDetalleFactura) NumeroDet from detallefactura";
         return consulta.executeQuery(sql);
     }
       public int insertDetallefac(DetalleFactura detalle) throws SQLException{
            int intRetorno = 0;
         Statement st = conecta.conectarBD().createStatement();
-        String sentencia="INSERT INTO detallefactura(idDetalle,fecha,subTotal,total,idFarmacia,idCliente)"
+        String sentencia="INSERT INTO detallefactura(idDetalleFactura,fecha,subTotal,total,idFarmacia,idCliente)"
                 +"VALUES("+detalle.getIdDetalle()+",'"
                 +detalle.getFecha()+"',"
                 +detalle.getSubtotal()+","
@@ -44,8 +44,8 @@ public class DATDetalles {
        public int insertDetalleMedic(DetalleMedicamento detalle) throws SQLException{
            int intRetorno = 0;
         Statement st = conecta.conectarBD().createStatement();
-        String sentencia="INSERT INTO detallefactura(idMedicamento,idDetalleFactura,cantProduct)"
-                +"VALUES("+detalle.getIdDetalle()+","+detalle.getIdMedicamento()+","+detalle.getCant()+")";
+        String sentencia="INSERT INTO medicamentodetallefactura(idMedicamento,idDetalleFactura,cantProduct)"
+                +"VALUES("+detalle.getIdMedicamento()+","+detalle.getIdDetalle()+","+detalle.getCant()+")";
         intRetorno=st.executeUpdate(sentencia);
           JOptionPane.showMessageDialog(null, "Detalle Agregado");
           return intRetorno;

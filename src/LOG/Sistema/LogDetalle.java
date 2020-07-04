@@ -8,8 +8,11 @@ package LOG.Sistema;
 import DAT.SISTEMA.DATDetalles;
 import ENT.Sistema.DetalleFactura;
 import ENT.Sistema.DetalleMedicamento;
+import ENT.Sistema.Medicamentos;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -34,5 +37,18 @@ public class LogDetalle {
     }
     public void inserDetalleMedic(DetalleMedicamento detalle) throws SQLException{
         objDetalle.insertDetalleMedic(detalle);
+    }
+    public boolean cantDisponible(Medicamentos m , int cant){
+        if(m.getExistenciTot()>=cant){
+           return true;
+        }else{
+            JOptionPane.showMessageDialog(null, "No hay la cantidad suficiente");
+            return  false;
+        }
+    }
+    public void imprimirCarrito(ArrayList<Medicamentos>carrito){
+        for(Medicamentos m : carrito){
+            System.out.println("Vendidos: "+m);
+        }
     }
 }

@@ -78,5 +78,10 @@ public class DetalleFactura {
     public void setIdCliente(int idCliente) {
         this.idCliente = idCliente;
     }
+
+    @Override
+    public String toString() {
+        return "DetalleFactura{" + "idDetalle=" + idDetalle + ", fecha=" + fecha + ", subtotal=" + subtotal + ", total=" + total + ", idFarmacia=" + idFarmacia + ", idCliente=" + idCliente + '}';
+    }
     
 }

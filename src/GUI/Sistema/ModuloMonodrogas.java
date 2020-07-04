@@ -35,9 +35,9 @@ public class ModuloMonodrogas extends javax.swing.JFrame {
         cargarTabla();
     }
 
-    private void cargarDatos(ArrayList<Monodroga> listMonodroga) {
+    private void cargarDatos(ArrayList<Monodroga> listaMonodroga) {
         try {
-            obMedica.getAllMonodroga(listMonodrogas);
+            obMedica.getAllMonodroga(listaMonodroga);
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Se producido un error al cagar los datos de la base", "ATENCION", JOptionPane.ERROR_MESSAGE);
         }

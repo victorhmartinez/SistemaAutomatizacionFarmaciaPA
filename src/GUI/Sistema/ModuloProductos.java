@@ -81,7 +81,10 @@ public class ModuloProductos extends javax.swing.JFrame {
     private void limpiarTabla() {
         for (int i = 0; i < tblMedicamentos.getRowCount(); i++) {
             dtm.removeRow(i);
+            System.out.println(i);
             i -= 1;
+            System.out.println(i);
+            System.out.println(tblMedicamentos.getRowCount());
         }
     }
 

@@ -5,9 +5,11 @@
  */
 package GUI.Sistema;
 
+import ENT.Sistema.Clientes;
 import ENT.Sistema.DetalleFactura;
 import ENT.Sistema.DetalleMedicamento;
 import ENT.Sistema.Medicamentos;
+import LOG.Sistema.LogClientes;
 import LOG.Sistema.LogDetalle;
 import LOG.Sistema.ObtenerMedicamentos;
 import java.awt.Dimension;
@@ -16,6 +18,7 @@ import java.awt.event.KeyEvent;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -34,18 +37,23 @@ public class ModuloVentas extends javax.swing.JFrame {
     /**
      * Creates new form ModuloProductos
      */
+    ArrayList<Clientes> listaClientes = new ArrayList<>();
     ArrayList<Medicamentos> lisCarrito = new ArrayList<>();
     ArrayList<Medicamentos> lisMedicamentos = new ArrayList<>();
     ObtenerMedicamentos objMedicamentos = new ObtenerMedicamentos();
     LogDetalle objDetalle = new LogDetalle();
+    LogClientes objLogCli = new LogClientes();
+    
     DefaultTableModel dtm;
     TableRowSorter trs = null;
     int numDetalle;
     double subtotalT,totalT,iva;
+    String idCliente;
 
     public ModuloVentas() {
         initComponents();
         //Línea 1
+        LocalDate fechaHoy = LocalDate.now();
         this.setSize(new Dimension(790, 650));
         setLocationRelativeTo(null);
         this.setResizable(false);
@@ -56,9 +64,11 @@ public class ModuloVentas extends javax.swing.JFrame {
         this.txtNombreCliente.setEnabled(false);
         this.txtCorreo.setEnabled(false);
         this.txtDireccion.setEnabled(false);
-       // this.txtFecha.setEnabled(false);
+        this.txtFecha.setEnabled(false);
         numDetalle = objDetalle.obtenerUltimaFactura()+1;
         cargarMedicamentos(lisMedicamentos);
+        txtFecha.setText(fechaHoy.toString());
+        llenarTablaClientes();
     }
 
     private void cargarMedicamentos(ArrayList<Medicamentos> listMedicamento) {
@@ -69,7 +79,18 @@ public class ModuloVentas extends javax.swing.JFrame {
         }
         llenarTabla(listMedicamento);
     }
+    private void cargarClientes(ArrayList<Clientes> listClientes) {
+        try {
+            objLogCli.obtenerTodosClientes(listClientes);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Se producido un error al cagar "
+                    + "los datos de los clientes", "ATENCION", JOptionPane.ERROR_MESSAGE);
+            System.out.println(e);
+        }
 
+    }
+
+ 
     private void llenarTabla(ArrayList<Medicamentos> listMedicamentos) {
 
         dtm = (DefaultTableModel) tblDatMedicamento.getModel();
@@ -89,7 +110,9 @@ public class ModuloVentas extends javax.swing.JFrame {
         txtNombreCliente.setText("");
         txtCorreo.setText("");
         txtDireccion.setText("");
-        txtFecha.setText("");
+        txtSubtotal.setText("");
+        txtIVA.setText("");
+        txtTotal.setText("");
 
     }
 
@@ -120,6 +143,18 @@ public class ModuloVentas extends javax.swing.JFrame {
         }
         lisCarrito.add(m);
 
+    }
+    private void llenarTablaClientes() {
+        cargarClientes(listaClientes);
+        dtm = (DefaultTableModel) tblClientes.getModel();
+        Object[] tablFilas = new Object[dtm.getColumnCount()];
+        for (Clientes clientes : listaClientes) {
+            tablFilas[0] = clientes.getIdentificacion();
+            tablFilas[1] = clientes.getNombreCli();
+            tablFilas[2] = clientes.getApellidoCli();
+            dtm.addRow(tablFilas);
+
+        }
     }
 
     private void modificarStock() {
@@ -167,9 +202,9 @@ public class ModuloVentas extends javax.swing.JFrame {
         jButtonBuscador = new javax.swing.JButton();
         jLabelNombre = new javax.swing.JLabel();
         jButtonAgregar = new javax.swing.JButton();
-        IngresoNombre = new javax.swing.JTextField();
+        txtCedulaBuscar = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblClientes = new javax.swing.JTable();
         jLabel2Fondo = new javax.swing.JLabel();
         mostrarMedicamentos = new javax.swing.JDialog();
         jPanel4 = new javax.swing.JPanel();
@@ -239,27 +274,28 @@ public class ModuloVentas extends javax.swing.JFrame {
 
         jButtonAgregar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMG/Sistema/accept.png"))); // NOI18N
         jButtonAgregar.setText("Agregar");
+        jButtonAgregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAgregarActionPerformed(evt);
+            }
+        });
         jDialog1.getContentPane().add(jButtonAgregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 390, -1, -1));
-        jDialog1.getContentPane().add(IngresoNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 140, 450, 30));
+        jDialog1.getContentPane().add(txtCedulaBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 140, 450, 30));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblClientes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Nombre", "Apellido", "Cédula", "Detalle"
+                "Identificacion", "Nombre", "Apellido"
             }
         ));
-        jScrollPane2.setViewportView(jTable1);
+        tblClientes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblClientesMouseClicked(evt);
+            }
+        });
+        jScrollPane2.setViewportView(tblClientes);
 
         jDialog1.getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 200, 530, 180));
 
@@ -541,6 +577,7 @@ public class ModuloVentas extends javax.swing.JFrame {
         realizarVenta();
         objDetalle.imprimirCarrito(lisCarrito);
         System.out.println(numDetalle);
+        limpiar();
     }//GEN-LAST:event_btnRealizarVentaActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
@@ -569,8 +606,7 @@ public class ModuloVentas extends javax.swing.JFrame {
         jDialog1.setLocationRelativeTo(null);
         jDialog1.setModal(true);
         jDialog1.setVisible(true);
-
-
+        
     }//GEN-LAST:event_btnBuscarClienteActionPerformed
 
     private void txtTotalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTotalActionPerformed
@@ -657,6 +693,30 @@ public class ModuloVentas extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void tblClientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblClientesMouseClicked
+        // TODO add your handling code here:
+         Clientes objClientes;
+        //Obtemos la fila a la q pertenece el medicamento
+        int selection = tblClientes.rowAtPoint(evt.getPoint());
+        //Obtenemos el id del medicamento seleccionado
+        idCliente = String.valueOf(tblClientes.getValueAt(selection, 0));
+        //Lo convertimos a  int para poder buscar
+        //Obtemos el medicamento
+        objClientes = objLogCli.obtenerUnCliente(listaClientes, idCliente);
+        //Presentamos los datos del medicamento en los txt
+        txtCedulaCliente.setText(objClientes.getIdentificacion());
+        txtNombreCliente.setText(objClientes.getNombreCli() +" "+ objClientes.getApellidoCli());
+        txtDireccion.setText("Bernardo V");
+        txtCorreo.setText("cnt@@gmail.com");
+
+    }//GEN-LAST:event_tblClientesMouseClicked
+
+    private void jButtonAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAgregarActionPerformed
+        // TODO add your handling code here:
+        listaClientes.clear();
+        cargarClientes(listaClientes);
+    }//GEN-LAST:event_jButtonAgregarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -696,7 +756,6 @@ public class ModuloVentas extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField IngresoNombre;
     private javax.swing.JButton btnBuscarCliente;
     private javax.swing.JButton btnBuscarMedicamento;
     private javax.swing.JButton btnCancelar;
@@ -737,13 +796,14 @@ public class ModuloVentas extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTable jTable1;
     private javax.swing.JLabel lblFondo2;
     private javax.swing.JDialog mostrarMedicamentos;
+    private javax.swing.JTable tblClientes;
     private javax.swing.JTable tblDatMedicamento;
     private javax.swing.JTable tblPreVenta;
     private javax.swing.JTextField txtBuscarMedicamento;
     private javax.swing.JTextField txtCant;
+    private javax.swing.JTextField txtCedulaBuscar;
     private javax.swing.JTextField txtCedulaCliente;
     private javax.swing.JTextField txtCorreo;
     private javax.swing.JTextField txtDireccion;

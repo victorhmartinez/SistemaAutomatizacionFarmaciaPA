@@ -437,14 +437,14 @@
                 <Component class="javax.swing.JTextField" name="txtCorreo">
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                      <AbsoluteConstraints x="133" y="96" width="211" height="-1"/>
+                      <AbsoluteConstraints x="130" y="100" width="211" height="-1"/>
                     </Constraint>
                   </Constraints>
                 </Component>
                 <Component class="javax.swing.JTextField" name="txtFecha">
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                      <AbsoluteConstraints x="133" y="134" width="211" height="-1"/>
+                      <AbsoluteConstraints x="130" y="140" width="211" height="-1"/>
                     </Constraint>
                   </Constraints>
                 </Component>
@@ -507,14 +507,14 @@
                   </Properties>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                      <AbsoluteConstraints x="20" y="60" width="113" height="-1"/>
+                      <AbsoluteConstraints x="20" y="70" width="113" height="-1"/>
                     </Constraint>
                   </Constraints>
                 </Component>
                 <Component class="javax.swing.JTextField" name="txtDireccion">
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                      <AbsoluteConstraints x="130" y="60" width="211" height="-1"/>
+                      <AbsoluteConstraints x="130" y="70" width="211" height="-1"/>
                     </Constraint>
                   </Constraints>
                 </Component>

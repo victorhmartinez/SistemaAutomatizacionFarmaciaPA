@@ -206,7 +206,6 @@ public class ModuloVentas extends javax.swing.JFrame {
     }
     
     public void generarPdf(String nombrePdf) throws FileNotFoundException, DocumentException, BadElementException, IOException{
-                   
             FileOutputStream archivo = new FileOutputStream(nombrePdf + ".pdf");
             Document doc = new Document();
             PdfWriter writer = PdfWriter.getInstance(doc,archivo);
@@ -217,7 +216,6 @@ public class ModuloVentas extends javax.swing.JFrame {
             objImg.setAlignment(1);
             objImg.setWidthPercentage(100);
             doc.add(objImg);
-            
             
             Font fontH1 = new Font(TIMES_ROMAN, 14, Font.BOLD);
             
@@ -245,8 +243,7 @@ public class ModuloVentas extends javax.swing.JFrame {
             doc.add(parrafo7);
             doc.add(parrafo4);
             doc.add(parrafo5);
-            
-            
+                 
             Paragraph saltoDeLinea = new Paragraph("                                                                                                                                                                                                                                                                                                                                                                                   ");
             doc.add(saltoDeLinea);          
             
@@ -265,15 +262,6 @@ public class ModuloVentas extends javax.swing.JFrame {
             parrafo6.setAlignment(1);
             doc.add(parrafo6);
             doc.add(new Phrase("\n")); 
-            
-            BaseFont bf = BaseFont.createFont(
-                           BaseFont.TIMES_ROMAN,
-                           BaseFont.CP1252,
-                           BaseFont.EMBEDDED);
-            Font font = new Font(bf, 12);
-            
-            
-            PdfPTable table = new PdfPTable(1);
 
             //Table de Productos            
             Font fontH2= new Font(TIMES_ROMAN, 14, Font.BOLD);
@@ -541,8 +529,8 @@ public class ModuloVentas extends javax.swing.JFrame {
         jLabel5.setFont(new java.awt.Font("Microsoft JhengHei UI", 0, 12)); // NOI18N
         jLabel5.setText("Fecha:");
         jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(16, 135, 62, -1));
-        jPanel2.add(txtCorreo, new org.netbeans.lib.awtextra.AbsoluteConstraints(133, 96, 211, -1));
-        jPanel2.add(txtFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(133, 134, 211, -1));
+        jPanel2.add(txtCorreo, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 100, 211, -1));
+        jPanel2.add(txtFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 140, 211, -1));
 
         jLabel6.setFont(new java.awt.Font("Microsoft JhengHei UI", 0, 12)); // NOI18N
         jLabel6.setText("Nombre Cliente:");
@@ -567,8 +555,8 @@ public class ModuloVentas extends javax.swing.JFrame {
 
         jLabel11.setFont(new java.awt.Font("Microsoft JhengHei UI", 0, 12)); // NOI18N
         jLabel11.setText("Direccion:");
-        jPanel2.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 60, 113, -1));
-        jPanel2.add(txtDireccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 60, 211, -1));
+        jPanel2.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 113, -1));
+        jPanel2.add(txtDireccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 70, 211, -1));
 
         jLabel7.setFont(new java.awt.Font("Microsoft JhengHei UI", 0, 12)); // NOI18N
         jLabel7.setText("BUSCAR CLIENTE:");

@@ -35,6 +35,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.sql.Date;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -129,8 +130,12 @@ public class ModuloVentas extends javax.swing.JFrame {
         txtCorreo.setText("");
         txtDireccion.setText("");
         txtSubtotal.setText("");
+        lisCarrito.clear();
         txtIVA.setText("");
         txtTotal.setText("");
+        totalT=0.0;
+        iva=0.0;
+        subtotalT=0.0;
 
     }
 
@@ -152,7 +157,7 @@ public class ModuloVentas extends javax.swing.JFrame {
         m = objMedicamentos.getOneMedicamento(lisMedicamentos, idSelect);
         int cant = Integer.parseInt(String.valueOf(tblPreVenta.getValueAt(fila, 2)));
         m.setExistenciTot(m.getExistenciTot() - cant);
-        DetalleMedicamento dtMedicamento = new DetalleMedicamento(m.getIdMedicamento(), 1, cant);
+        DetalleMedicamento dtMedicamento = new DetalleMedicamento(m.getIdMedicamento(), numDetalle, cant);
         System.out.println("Detalles: "+dtMedicamento);
         try {
             objDetalle.inserDetalleMedic(dtMedicamento);
@@ -163,14 +168,15 @@ public class ModuloVentas extends javax.swing.JFrame {
 
     }
     private void llenarTablaClientes() {
+        DefaultTableModel modeloClientes;
         cargarClientes(listaClientes);
-        dtm = (DefaultTableModel) tblClientes.getModel();
+        modeloClientes = (DefaultTableModel) tblClientes.getModel();
         Object[] tablFilas = new Object[dtm.getColumnCount()];
         for (Clientes clientes : listaClientes) {
             tablFilas[0] = clientes.getIdentificacion();
             tablFilas[1] = clientes.getNombreCli();
             tablFilas[2] = clientes.getApellidoCli();
-            dtm.addRow(tablFilas);
+            modeloClientes.addRow(tablFilas);
 
         }
     }
@@ -184,7 +190,15 @@ public class ModuloVentas extends javax.swing.JFrame {
             }
         }
     }
-
+   private void limpiarTablaMedicamentos() {
+        for (int i = 0; i < tblDatMedicamento.getRowCount(); i++) {
+            dtm.removeRow(i);
+            System.out.println(i);
+            i -= 1;
+            System.out.println(i);
+            System.out.println(tblDatMedicamento.getRowCount());
+        }
+    }
     private void setDetalle() {
         SimpleDateFormat fechaFormato = new SimpleDateFormat("yyyy-MM-dd");
         Date fecha = null;
@@ -193,7 +207,7 @@ public class ModuloVentas extends javax.swing.JFrame {
 
             java.util.Date uDatete = fechaFormato.parse(txtFecha.getText());
             fecha = new Date(uDatete.getTime());
-        } catch (Exception e) {
+        } catch (ParseException e) {
             JOptionPane.showMessageDialog(null, "Fecha Incorrecta", "ERROR", JOptionPane.WARNING_MESSAGE);
         }
         DetalleFactura detalle = new DetalleFactura(numDetalle, fecha, Double.parseDouble(txtSubtotal.getText()), Double.parseDouble(txtTotal.getText()), 1, 1);
@@ -212,7 +226,7 @@ public class ModuloVentas extends javax.swing.JFrame {
             doc.open();
             
             //Logotipo
-            Image objImg = Image.getInstance("D:\\Documentos\\GP8vo\\Metodologias Agiles\\SistemaAutomatizacionFarmaciaPA\\src\\IMG\\Sistema\\LogoPrincipal.JPG");
+            Image objImg = Image.getInstance("src\\IMG\\Sistema\\LogoPrincipal.JPG");
             objImg.setAlignment(1);
             objImg.setWidthPercentage(100);
             doc.add(objImg);
@@ -706,16 +720,20 @@ public class ModuloVentas extends javax.swing.JFrame {
             generarPdf(txtCedulaCliente.getText()+"_"+txtNombreCliente.getText());
         }catch(FileNotFoundException ex){
             Logger.getLogger(ModuloPrueba.class.getName()).log(Level.SEVERE, null, ex);
-        }catch(DocumentException ex){
-            Logger.getLogger(ModuloPrueba.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
+        }catch(DocumentException | IOException ex){
             Logger.getLogger(ModuloPrueba.class.getName()).log(Level.SEVERE, null, ex);
         }        
         setDetalle();
         realizarVenta();
         objDetalle.imprimirCarrito(lisCarrito);
         System.out.println(numDetalle);
+        modificarStock();
         limpiar();
+        lisMedicamentos.clear();
+        limpiarTablaMedicamentos();
+        cargarMedicamentos(lisMedicamentos);
+                
+        numDetalle=objDetalle.obtenerUltimaFactura()+1;
     }//GEN-LAST:event_btnRealizarVentaActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed

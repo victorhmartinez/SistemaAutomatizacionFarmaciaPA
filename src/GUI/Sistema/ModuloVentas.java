@@ -39,6 +39,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
@@ -101,6 +102,7 @@ public class ModuloVentas extends javax.swing.JFrame {
     private void cargarClientes(ArrayList<Clientes> listClientes) {
         try {
             objLogCli.obtenerTodosClientes(listClientes);
+            JOptionPane.showMessageDialog(null,"Cliente Agregado");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Se producido un error al cagar "
                     + "los datos de los clientes", "ATENCION", JOptionPane.ERROR_MESSAGE);
@@ -714,10 +716,16 @@ public class ModuloVentas extends javax.swing.JFrame {
 
 
     }//GEN-LAST:event_tblPreVentaMouseClicked
-
+    
     private void btnRealizarVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRealizarVentaActionPerformed
+        Calendar cl = Calendar.getInstance();
+        int hora,minuto,seg;
+        hora=cl.get(Calendar.HOUR_OF_DAY);
+        minuto=cl.get(Calendar.MINUTE);
+        seg=cl.get(Calendar.SECOND);
+        String cadena=""+hora+minuto+seg;
         try{
-            generarPdf(txtCedulaCliente.getText()+"_"+txtNombreCliente.getText());
+            generarPdf(txtCedulaCliente.getText()+"_"+txtNombreCliente.getText()+"_"+cadena);
         }catch(FileNotFoundException ex){
             Logger.getLogger(ModuloPrueba.class.getName()).log(Level.SEVERE, null, ex);
         }catch(DocumentException | IOException ex){
@@ -734,11 +742,14 @@ public class ModuloVentas extends javax.swing.JFrame {
         cargarMedicamentos(lisMedicamentos);
                 
         numDetalle=objDetalle.obtenerUltimaFactura()+1;
+        JOptionPane.showMessageDialog(null, "Venta Exitosa");
+       // JOptionPane.showMessageDialog(null, "Detalle de Venta Agregado");
     }//GEN-LAST:event_btnRealizarVentaActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // TODO add your handling code here:
         limpiar();
+        JOptionPane.showMessageDialog(null, "Proceso cancelado");
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnSalirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSalirMouseClicked

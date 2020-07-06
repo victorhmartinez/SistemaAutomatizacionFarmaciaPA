@@ -3,10 +3,8 @@ package DAT.SISTEMA;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import javax.swing.JOptionPane;
 import ENT.Sistema.Medicamentos;
 import ENT.Sistema.Monodroga;
-import java.awt.HeadlessException;
 import java.sql.PreparedStatement;
 
 /**
@@ -61,7 +59,6 @@ public class DATMedicamentos {
                 + objMedicamentos.getLote()
                 + "')";
         intRetorno = st.executeUpdate(Sentencia); // envia la sentencia a la bd
-        JOptionPane.showMessageDialog(null, "Agregado con EXITO");
         return intRetorno;
     }
 
@@ -81,7 +78,6 @@ public class DATMedicamentos {
                 + objMono.getMonoDrogaNombre()
                 + "')";
         intRetorno = st.executeUpdate(query); // envia la sentencia a la bd
-        JOptionPane.showMessageDialog(null, "Agregado con EXITO");
         return intRetorno;
     }
     public int modificarMonodroga(Monodroga objMono) throws SQLException{

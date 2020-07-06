@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -37,7 +36,6 @@ public class LogClientes {
             //Creamos un objeto de tipo Medicamentos
             Clientes objClientes = new Clientes(rs.getString("nombreCli"), rs.getString("apellidoCli"),
                     rs.getString("identificacion"));
-            JOptionPane.showMessageDialog(null, "Prueba5555555");
             listaClientes.add(objClientes);
             
         }

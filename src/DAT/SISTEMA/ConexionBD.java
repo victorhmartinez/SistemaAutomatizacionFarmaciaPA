@@ -30,7 +30,7 @@ public class ConexionBD {
             Class.forName(driver);
             con = DriverManager.getConnection(url, user, password);
            if (con !=null) {
-               JOptionPane.showMessageDialog(null, "Conexion Exitosa");
+               //JOptionPane.showMessageDialog(null, "Conexion Exitosa");
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error al intentar conectarse con la BD");

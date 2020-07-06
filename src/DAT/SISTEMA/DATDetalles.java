@@ -38,7 +38,7 @@ public class DATDetalles {
                 +detalle.getIdFarmacia()+","
                 +detalle.getIdCliente()+")";
         intRetorno=st.executeUpdate(sentencia);
-          JOptionPane.showMessageDialog(null, "Detalle Afregado");
+        //  JOptionPane.showMessageDialog(null, "Detalle Agregado");
           return intRetorno;
       }
        public int insertDetalleMedic(DetalleMedicamento detalle) throws SQLException{
@@ -47,7 +47,7 @@ public class DATDetalles {
         String sentencia="INSERT INTO medicamentodetallefactura(idMedicamento,idDetalleFactura,cantProduct)"
                 +"VALUES("+detalle.getIdMedicamento()+","+detalle.getIdDetalle()+","+detalle.getCant()+")";
         intRetorno=st.executeUpdate(sentencia);
-          JOptionPane.showMessageDialog(null, "Detalle Agregado");
+         // JOptionPane.showMessageDialog(null, "Detalle Agregado");
           return intRetorno;
       }
       

@@ -102,7 +102,7 @@ public class ModuloVentas extends javax.swing.JFrame {
     private void cargarClientes(ArrayList<Clientes> listClientes) {
         try {
             objLogCli.obtenerTodosClientes(listClientes);
-            JOptionPane.showMessageDialog(null,"Cliente Agregado");
+           
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Se producido un error al cagar "
                     + "los datos de los clientes", "ATENCION", JOptionPane.ERROR_MESSAGE);
@@ -222,7 +222,8 @@ public class ModuloVentas extends javax.swing.JFrame {
     }
     
     public void generarPdf(String nombrePdf) throws FileNotFoundException, DocumentException, BadElementException, IOException{
-            FileOutputStream archivo = new FileOutputStream(nombrePdf + ".pdf");
+        
+        FileOutputStream archivo = new FileOutputStream(nombrePdf + ".pdf");
             Document doc = new Document();
             PdfWriter writer = PdfWriter.getInstance(doc,archivo);
             doc.open();
@@ -871,6 +872,8 @@ public class ModuloVentas extends javax.swing.JFrame {
         txtNombreCliente.setText(objClientes.getNombreCli() +" "+ objClientes.getApellidoCli());
         txtDireccion.setText("Bernardo V");
         txtCorreo.setText("cnt@@gmail.com");
+        
+         JOptionPane.showMessageDialog(null,"Cliente Agregado");
 
     }//GEN-LAST:event_tblClientesMouseClicked
 

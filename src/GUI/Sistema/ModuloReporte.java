@@ -33,12 +33,12 @@ public class ModuloReporte extends javax.swing.JFrame {
         jLabelAsunto = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
         jDateFechaIn = new com.toedter.calendar.JDateChooser();
-        jLabelFechaIn = new javax.swing.JLabel();
         jLabelFechaFin = new javax.swing.JLabel();
         jDateFechaFin = new com.toedter.calendar.JDateChooser();
         jButtonGenerar = new javax.swing.JButton();
         jButtonGuardar = new javax.swing.JButton();
         jButtonEliminar = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
         jLabelFondo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -57,11 +57,6 @@ public class ModuloReporte extends javax.swing.JFrame {
         getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 130, 360, 50));
         getContentPane().add(jDateFechaIn, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 230, 160, 30));
 
-        jLabelFechaIn.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        jLabelFechaIn.setForeground(new java.awt.Color(255, 255, 255));
-        jLabelFechaIn.setText("FECHA DE INICIO:");
-        getContentPane().add(jLabelFechaIn, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 230, -1, -1));
-
         jLabelFechaFin.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabelFechaFin.setForeground(new java.awt.Color(255, 255, 255));
         jLabelFechaFin.setText("FECHA DE FINALIZACION:");
@@ -79,6 +74,11 @@ public class ModuloReporte extends javax.swing.JFrame {
         jButtonEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMG/Sistema/eliminarventa.png"))); // NOI18N
         jButtonEliminar.setText("Eliminar");
         getContentPane().add(jButtonEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 460, 120, 50));
+
+        jLabel1.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel1.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        jLabel1.setText("FECHA DE INICIO:");
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 230, -1, -1));
 
         jLabelFondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMG/Sistema/Fondo.jpg"))); // NOI18N
         getContentPane().add(jLabelFondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(-200, 0, 1090, 630));
@@ -127,9 +127,9 @@ public class ModuloReporte extends javax.swing.JFrame {
     private javax.swing.JButton jButtonGuardar;
     private com.toedter.calendar.JDateChooser jDateFechaFin;
     private com.toedter.calendar.JDateChooser jDateFechaIn;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabelAsunto;
     private javax.swing.JLabel jLabelFechaFin;
-    private javax.swing.JLabel jLabelFechaIn;
     private javax.swing.JLabel jLabelFondo;
     private javax.swing.JLabel jLabeltITULO;
     private javax.swing.JTextField jTextField1;

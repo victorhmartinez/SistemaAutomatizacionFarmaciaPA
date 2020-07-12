@@ -202,6 +202,8 @@ public class ModuloVentas extends javax.swing.JFrame {
         }
     }
     private void setDetalle() {
+        Clientes objClientes;
+       objClientes = objLogCli.obtenerUnCliente(listaClientes, idCliente);
         SimpleDateFormat fechaFormato = new SimpleDateFormat("yyyy-MM-dd");
         Date fecha = null;
 
@@ -212,7 +214,7 @@ public class ModuloVentas extends javax.swing.JFrame {
         } catch (ParseException e) {
             JOptionPane.showMessageDialog(null, "Fecha Incorrecta", "ERROR", JOptionPane.WARNING_MESSAGE);
         }
-        DetalleFactura detalle = new DetalleFactura(numDetalle, fecha, Double.parseDouble(txtSubtotal.getText()), Double.parseDouble(txtTotal.getText()), 1, 1);
+        DetalleFactura detalle = new DetalleFactura(numDetalle, fecha, Double.parseDouble(txtSubtotal.getText()), Double.parseDouble(txtTotal.getText()), 1, objClientes);
         try {
             objDetalle.insertDetalle(detalle);
         } catch (SQLException ex) {

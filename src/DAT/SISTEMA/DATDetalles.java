@@ -7,6 +7,7 @@ package DAT.SISTEMA;
 
 import ENT.Sistema.DetalleFactura;
 import ENT.Sistema.DetalleMedicamento;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -36,7 +37,7 @@ public class DATDetalles {
                 +detalle.getSubtotal()+","
                 +detalle.getTotal()+","
                 +detalle.getIdFarmacia()+","
-                +detalle.getIdCliente()+")";
+                +detalle.getCliente().getIdCliente()+")";
         intRetorno=st.executeUpdate(sentencia);
         //  JOptionPane.showMessageDialog(null, "Detalle Agregado");
           return intRetorno;
@@ -50,5 +51,21 @@ public class DATDetalles {
          // JOptionPane.showMessageDialog(null, "Detalle Agregado");
           return intRetorno;
       }
+          public ResultSet getReportes(Date fechaInicio, Date fechafin) throws SQLException {
+        Statement consulta = conecta.conectarBD().createStatement();
+        String sql = "SELECT df.idDetalleFactura,df.fecha,df.subTotal,df.total,cl.idCliente,cl.nombreCli,cl.apellidoCli "
+                + "FROM detallefactura df,cliente cl "
+                + "WHERE df.fecha between '"
+                + fechaInicio+"' and '"+fechafin+"' AND df.idCliente=cl.idCliente";
+        return consulta.executeQuery(sql);
+    }
+          public ResultSet getTotalVentas(Date fechaInicio,Date fechaFin) throws SQLException{
+               Statement consulta = conecta.conectarBD().createStatement();
+        String sql = "SELECT SUM(total) "
+                + "FROM detallefactura  "
+                + "WHERE fecha between '"
+                + fechaInicio+"' and '"+fechaFin+"'";
+        return consulta.executeQuery(sql);
+          }
       
 }

@@ -17,16 +17,18 @@ public class DetalleFactura {
     private double subtotal;
     private double total;
     private  int idFarmacia;
-    private int idCliente;
+    private Clientes cliente;
 
-    public DetalleFactura(int idDetalle, Date fecha, double subtotal, double total, int idFarmacia, int idCliente) {
+    public DetalleFactura(int idDetalle, Date fecha, double subtotal, double total, int idFarmacia, Clientes cliente) {
         this.idDetalle = idDetalle;
         this.fecha = fecha;
         this.subtotal = subtotal;
         this.total = total;
         this.idFarmacia = idFarmacia;
-        this.idCliente = idCliente;
+        this.cliente = cliente;
     }
+
+
 
     public DetalleFactura() {
     }
@@ -71,17 +73,21 @@ public class DetalleFactura {
         this.idFarmacia = idFarmacia;
     }
 
-    public int getIdCliente() {
-        return idCliente;
+    public Clientes getCliente() {
+        return cliente;
     }
 
-    public void setIdCliente(int idCliente) {
-        this.idCliente = idCliente;
+    public void setCliente(Clientes cliente) {
+        this.cliente = cliente;
     }
 
     @Override
     public String toString() {
-        return "DetalleFactura{" + "idDetalle=" + idDetalle + ", fecha=" + fecha + ", subtotal=" + subtotal + ", total=" + total + ", idFarmacia=" + idFarmacia + ", idCliente=" + idCliente + '}';
+        return "DetalleFactura{" + "idDetalle=" + idDetalle + ", fecha=" + fecha + ", subtotal=" + subtotal + ", total=" + total + ", idFarmacia=" + idFarmacia + ", cliente=" + cliente + '}';
     }
+
+   
+
+   
     
 }

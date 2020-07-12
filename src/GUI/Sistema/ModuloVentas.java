@@ -204,6 +204,7 @@ public class ModuloVentas extends javax.swing.JFrame {
     private void setDetalle() {
         Clientes objClientes;
        objClientes = objLogCli.obtenerUnCliente(listaClientes, idCliente);
+       objClientes.setIdCliente(1);
         SimpleDateFormat fechaFormato = new SimpleDateFormat("yyyy-MM-dd");
         Date fecha = null;
 

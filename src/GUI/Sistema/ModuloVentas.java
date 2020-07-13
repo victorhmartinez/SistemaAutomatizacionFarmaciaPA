@@ -193,12 +193,13 @@ public class ModuloVentas extends javax.swing.JFrame {
         }
     }
    private void limpiarTablaMedicamentos() {
-        for (int i = 0; i < tblDatMedicamento.getRowCount(); i++) {
-            dtm.removeRow(i);
+        for (int i = 0; i < tblPreVenta.getRowCount(); i++) {
+           System.out.println("Validardtm "+dtm);
+           dtm.removeRow(i); 
             System.out.println(i);
             i -= 1;
             System.out.println(i);
-            System.out.println(tblDatMedicamento.getRowCount());
+            System.out.println(tblPreVenta.getRowCount());
         }
     }
     private void setDetalle() {
@@ -399,7 +400,7 @@ public class ModuloVentas extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblPreVenta = new javax.swing.JTable();
         btnRealizarVenta = new javax.swing.JButton();
-        btnEditarVenta = new javax.swing.JButton();
+        btnEliminarP = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
         txtSubtotal = new javax.swing.JTextField();
         txtIVA = new javax.swing.JTextField();
@@ -618,15 +619,15 @@ public class ModuloVentas extends javax.swing.JFrame {
         });
         jPanel3.add(btnRealizarVenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 115, -1, -1));
 
-        btnEditarVenta.setFont(new java.awt.Font("Microsoft JhengHei UI", 1, 12)); // NOI18N
-        btnEditarVenta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMG/Sistema/eliminarventa.png"))); // NOI18N
-        btnEditarVenta.setText("ELIMINAR PRODUCTO");
-        btnEditarVenta.addActionListener(new java.awt.event.ActionListener() {
+        btnEliminarP.setFont(new java.awt.Font("Microsoft JhengHei UI", 1, 12)); // NOI18N
+        btnEliminarP.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMG/Sistema/eliminarventa.png"))); // NOI18N
+        btnEliminarP.setText("ELIMINAR PRODUCTO");
+        btnEliminarP.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEditarVentaActionPerformed(evt);
+                btnEliminarPActionPerformed(evt);
             }
         });
-        jPanel3.add(btnEditarVenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 115, -1, -1));
+        jPanel3.add(btnEliminarP, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 115, -1, -1));
 
         btnCancelar.setFont(new java.awt.Font("Microsoft JhengHei UI", 1, 12)); // NOI18N
         btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMG/Sistema/cancelventa.png"))); // NOI18N
@@ -752,6 +753,11 @@ public class ModuloVentas extends javax.swing.JFrame {
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // TODO add your handling code here:
+        DefaultTableModel dm = (DefaultTableModel)tblPreVenta.getModel();
+        while(dm.getRowCount() > 0)
+        {
+        dm.removeRow(0);
+        }
         limpiar();
         JOptionPane.showMessageDialog(null, "Proceso cancelado");
     }//GEN-LAST:event_btnCancelarActionPerformed
@@ -762,10 +768,20 @@ public class ModuloVentas extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btnSalirMouseClicked
 
-    private void btnEditarVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarVentaActionPerformed
-
-    }//GEN-LAST:event_btnEditarVentaActionPerformed
-
+    private void btnEliminarPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarPActionPerformed
+ if(tblPreVenta.getSelectedRow()!=-1){
+              int descision = JOptionPane.showConfirmDialog(null, " Desea eliminar este producto?");
+              if (descision == JOptionPane.YES_OPTION) {
+              //idSelect = tblPreVenta.getSelectedRow();
+              DefaultTableModel modeloPreventa = (DefaultTableModel) tblPreVenta.getModel();
+            
+               System.out.println("debe eliminar");
+               System.out.println("entro AL IF");
+               modeloPreventa.removeRow(tblPreVenta.getSelectedRow()); 
+               System.out.println("debe elIMINAR LA FILA "+tblPreVenta.getSelectedRow());
+    }//GEN-LAST:event_btnEliminarPActionPerformed
+}
+ }
     private void btnBuscarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarClienteActionPerformed
 
 // TODO add your handling code here:
@@ -928,7 +944,7 @@ public class ModuloVentas extends javax.swing.JFrame {
     private javax.swing.JButton btnBuscarCliente;
     private javax.swing.JButton btnBuscarMedicamento;
     private javax.swing.JButton btnCancelar;
-    private javax.swing.JButton btnEditarVenta;
+    private javax.swing.JButton btnEliminarP;
     private javax.swing.JButton btnRealizarVenta;
     private javax.swing.JButton btnSalir;
     private javax.swing.JButton jButton1;

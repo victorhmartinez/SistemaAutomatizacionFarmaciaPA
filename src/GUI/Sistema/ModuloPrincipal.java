@@ -34,6 +34,7 @@ public class ModuloPrincipal extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         btnVentas = new javax.swing.JButton();
+        Reporte = new javax.swing.JButton();
         btnProductos = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         menuCliente = new javax.swing.JMenu();
@@ -71,6 +72,17 @@ public class ModuloPrincipal extends javax.swing.JFrame {
         });
         jdpescritorio.add(btnVentas);
         btnVentas.setBounds(260, 30, 200, 50);
+
+        Reporte.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        Reporte.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMG/Sistema/new1.png"))); // NOI18N
+        Reporte.setText("GENERAR REPORTE");
+        Reporte.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ReporteActionPerformed(evt);
+            }
+        });
+        jdpescritorio.add(Reporte);
+        Reporte.setBounds(490, 30, 260, 50);
 
         btnProductos.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         btnProductos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMG/Sistema/pastillas.png"))); // NOI18N
@@ -121,6 +133,12 @@ public class ModuloPrincipal extends javax.swing.JFrame {
         objMedicamentos.setVisible(true);
     }//GEN-LAST:event_btnProductosMouseClicked
 
+    private void ReporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ReporteActionPerformed
+        // TODO add your handling code here:
+        ModuloReporte objreporte= new ModuloReporte();
+        objreporte.setVisible(true);
+    }//GEN-LAST:event_ReporteActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -160,6 +178,7 @@ public class ModuloPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton Reporte;
     private javax.swing.JButton btnProductos;
     private javax.swing.JButton btnVentas;
     private javax.swing.JLabel jLabel1;

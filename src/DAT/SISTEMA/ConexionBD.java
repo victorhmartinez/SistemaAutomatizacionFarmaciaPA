@@ -19,16 +19,13 @@ public class ConexionBD {
      //Conectarse a la BDD
    public Connection con;
    public String driver = "com.mysql.jdbc.Driver";
-    public String user = "root";
-    public String password = "";
-    public String url = "jdbc:mysql://localhost:3306/bfarmacia";
     
    //mismo nombre de la clase
     public ConexionBD() {
         
         try {
             Class.forName(driver);
-            con = DriverManager.getConnection(url, user, password);
+            con = DriverManager.getConnection("jdbc:mysql://sql10.freemysqlhosting.net/sql10354643", "sql10354643", "7JxJb7597V");
            if (con !=null) {
                //JOptionPane.showMessageDialog(null, "Conexion Exitosa");
             }

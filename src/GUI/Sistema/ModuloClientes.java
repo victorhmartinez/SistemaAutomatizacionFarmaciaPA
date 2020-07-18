@@ -9,12 +9,12 @@ package GUI.Sistema;
  *
  * @author Christian
  */
-public class Crudclientes extends javax.swing.JFrame {
+public class ModuloClientes extends javax.swing.JFrame {
 
     /**
      * Creates new form Interfaz1
      */
-    public Crudclientes() {
+    public ModuloClientes() {
         initComponents();
         this.setLocationRelativeTo(null);
     }

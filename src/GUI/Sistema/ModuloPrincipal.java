@@ -5,6 +5,9 @@
  */
 package GUI.Sistema;
 
+import ENT.Sistema.Usuario;
+import javax.swing.ImageIcon;
+
 /**
  *
  * @author Usuario
@@ -14,11 +17,26 @@ public class ModuloPrincipal extends javax.swing.JFrame {
     /**
      * Creates new form ModuloProductos
      */
+    Usuario user = new Usuario();
     public ModuloPrincipal() {
-        initComponents();
-        this.setExtendedState(MAXIMIZED_BOTH);
-        setTitle("FARMACIA 'PRIMEROS AUXILIOS' ");
+      
+        
     }
+     public ModuloPrincipal(Usuario user) {
+           this.user=user;
+           initComponents();
+                     this.setIconImage(new ImageIcon(getClass().getResource("/IMG/Sistema/farmacia.png")).getImage());
+
+    
+        setTitle("FARMACIA 'PRIMEROS AUXILIOS' ");
+        if(user.getTipoUsuario().equals("Administrador")){
+            lblTipo.setText("USUARIO: ADMINISTRADOR");
+        }else{
+            lblTipo.setText("USUARIO: EMPLEADO");
+            Reporte.setVisible(false);
+            btnEmpleados.setVisible(false);
+        }
+     }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -30,25 +48,29 @@ public class ModuloPrincipal extends javax.swing.JFrame {
     private void initComponents() {
 
         jdpescritorio = new javax.swing.JDesktopPane();
-        jLabel5 = new javax.swing.JLabel();
+        lblTipo = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         btnVentas = new javax.swing.JButton();
         Reporte = new javax.swing.JButton();
         btnProductos = new javax.swing.JButton();
+        btnClientes = new javax.swing.JButton();
+        btnEmpleados = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         menuCliente = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Principal");
         setPreferredSize(new java.awt.Dimension(1650, 1080));
 
         jdpescritorio.setBackground(new java.awt.Color(174, 204, 206));
 
-        jLabel5.setFont(new java.awt.Font("Perpetua Titling MT", 1, 16)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel5.setText("USUARIO: ADMINISTRADOR");
-        jdpescritorio.add(jLabel5);
-        jLabel5.setBounds(20, 640, 250, 20);
+        lblTipo.setFont(new java.awt.Font("Perpetua Titling MT", 1, 16)); // NOI18N
+        lblTipo.setForeground(new java.awt.Color(255, 255, 255));
+        lblTipo.setText("USUARIO: ADMINISTRADOR");
+        jdpescritorio.add(lblTipo);
+        lblTipo.setBounds(20, 640, 250, 20);
 
         jLabel4.setBackground(new java.awt.Color(21, 52, 114));
         jLabel4.setFont(new java.awt.Font("Stencil", 1, 36)); // NOI18N
@@ -60,7 +82,7 @@ public class ModuloPrincipal extends javax.swing.JFrame {
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMG/Sistema/Fondo.jpg"))); // NOI18N
         jLabel1.setToolTipText("");
         jdpescritorio.add(jLabel1);
-        jLabel1.setBounds(-10, 110, 1650, 490);
+        jLabel1.setBounds(0, 110, 1650, 490);
 
         btnVentas.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         btnVentas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMG/Sistema/buy.png"))); // NOI18N
@@ -74,7 +96,7 @@ public class ModuloPrincipal extends javax.swing.JFrame {
         btnVentas.setBounds(260, 30, 200, 50);
 
         Reporte.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        Reporte.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMG/Sistema/new1.png"))); // NOI18N
+        Reporte.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMG/Sistema/seo-report.png"))); // NOI18N
         Reporte.setText("GENERAR REPORTE");
         Reporte.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -82,7 +104,7 @@ public class ModuloPrincipal extends javax.swing.JFrame {
             }
         });
         jdpescritorio.add(Reporte);
-        Reporte.setBounds(490, 30, 260, 50);
+        Reporte.setBounds(740, 30, 260, 50);
 
         btnProductos.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         btnProductos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMG/Sistema/pastillas.png"))); // NOI18N
@@ -95,11 +117,44 @@ public class ModuloPrincipal extends javax.swing.JFrame {
         jdpescritorio.add(btnProductos);
         btnProductos.setBounds(20, 30, 200, 50);
 
+        btnClientes.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        btnClientes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMG/Sistema/cliente.png"))); // NOI18N
+        btnClientes.setText("CLIENTES");
+        btnClientes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnClientesMouseClicked(evt);
+            }
+        });
+        jdpescritorio.add(btnClientes);
+        btnClientes.setBounds(500, 30, 200, 50);
+
+        btnEmpleados.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        btnEmpleados.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMG/Sistema/empleado.png"))); // NOI18N
+        btnEmpleados.setText("EMPLEADOS");
+        btnEmpleados.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnEmpleadosMouseClicked(evt);
+            }
+        });
+        jdpescritorio.add(btnEmpleados);
+        btnEmpleados.setBounds(1040, 30, 200, 50);
+
         jMenuBar1.setBackground(new java.awt.Color(51, 51, 51));
         jMenuBar1.setForeground(new java.awt.Color(255, 0, 51));
 
         menuCliente.setBackground(new java.awt.Color(0, 0, 0));
-        menuCliente.setText("Archivo");
+        menuCliente.setText("Opciones");
+
+        jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItem1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMG/Sistema/logout.png"))); // NOI18N
+        jMenuItem1.setText("Cerrar Sesion");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        menuCliente.add(jMenuItem1);
+
         jMenuBar1.add(menuCliente);
 
         setJMenuBar(jMenuBar1);
@@ -138,6 +193,23 @@ public class ModuloPrincipal extends javax.swing.JFrame {
         ModuloReporte objreporte= new ModuloReporte();
         objreporte.setVisible(true);
     }//GEN-LAST:event_ReporteActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+       this.dispose();
+       ModuloLogin lp= new ModuloLogin();
+       lp.setVisible(true);
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void btnClientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnClientesMouseClicked
+        // TODO add your handling code here:
+        ModuloClientes mc = new ModuloClientes();
+        mc.setVisible(true);
+    }//GEN-LAST:event_btnClientesMouseClicked
+
+    private void btnEmpleadosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEmpleadosMouseClicked
+        ModuloEmpleado me = new ModuloEmpleado();
+        me.setVisible(true);
+    }//GEN-LAST:event_btnEmpleadosMouseClicked
 
     /**
      * @param args the command line arguments
@@ -179,13 +251,16 @@ public class ModuloPrincipal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Reporte;
+    private javax.swing.JButton btnClientes;
+    private javax.swing.JButton btnEmpleados;
     private javax.swing.JButton btnProductos;
     private javax.swing.JButton btnVentas;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     public javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
     public static javax.swing.JDesktopPane jdpescritorio;
+    private javax.swing.JLabel lblTipo;
     private javax.swing.JMenu menuCliente;
     // End of variables declaration//GEN-END:variables
 }

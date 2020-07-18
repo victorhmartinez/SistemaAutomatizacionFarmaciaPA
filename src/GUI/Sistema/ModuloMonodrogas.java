@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -33,6 +34,7 @@ public class ModuloMonodrogas extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         setTitle("Monodrogas");
         cargarTabla();
+        this.setIconImage(new ImageIcon(getClass().getResource("/IMG/Sistema/pastilla.png")).getImage());
     }
 
     private void cargarDatos(ArrayList<Monodroga> listaMonodroga) {
@@ -85,7 +87,8 @@ private void cargarTabla(){
         jLabel8 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setResizable(false);
 
         jDesktopPane1.setBackground(new java.awt.Color(229, 240, 241));
         jDesktopPane1.setPreferredSize(new java.awt.Dimension(800, 600));

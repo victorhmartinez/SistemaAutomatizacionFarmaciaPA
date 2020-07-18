@@ -11,6 +11,8 @@ import LOG.Sistema.ObtenerMedicamentos;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -29,6 +31,7 @@ public class ModuloComposicion extends javax.swing.JFrame {
         setTitle("Composición");
        cargarMedicamentos();
        cargarMonodroga();
+       this.setIconImage(new ImageIcon(getClass().getResource("/IMG/Sistema/medicine.png")).getImage());
     }
     private  void cargarMedicamentos(){
         ArrayList<Medicamentos>  listMedicamentos = new ArrayList<>();
@@ -42,7 +45,7 @@ public class ModuloComposicion extends javax.swing.JFrame {
             cmbMedicamento.setModel(modeloComboMedicamento);
            
         } catch (Exception ex) {
-            System.err.println("ERROR" + ex);
+             JOptionPane.showMessageDialog(null, "Error al eliminar");
         }
     }
      private void cargarMonodroga(){
@@ -57,7 +60,7 @@ public class ModuloComposicion extends javax.swing.JFrame {
             cmbMonodroga.setModel(modeloComboMonodroga);
            
         } catch (Exception ex) {
-            System.err.println("ERROR" + ex);
+             JOptionPane.showMessageDialog(null, "Error al eliminar");
         }
     }
    
@@ -90,6 +93,7 @@ public class ModuloComposicion extends javax.swing.JFrame {
         btnSalir = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         jDesktopPane1.setBackground(new java.awt.Color(229, 240, 241));
         jDesktopPane1.setPreferredSize(new java.awt.Dimension(800, 600));

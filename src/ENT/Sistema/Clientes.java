@@ -22,12 +22,7 @@ public class Clientes {
         this.contactos = contactos;
     }
 
-    public Clientes(String nombreCli, String apellidoCli, String identificacion) {
-
-        this.nombreCli = nombreCli;
-        this.apellidoCli = apellidoCli;
-        this.identificacion = identificacion;
-    }
+ 
 
     
     public int getIdCliente() {

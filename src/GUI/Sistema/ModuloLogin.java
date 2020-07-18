@@ -5,6 +5,12 @@
  */
 package GUI.Sistema;
 
+import ENT.Sistema.Usuario;
+import LOG.Sistema.LogUsuario;
+import java.sql.SQLException;
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Christian
@@ -14,9 +20,11 @@ public class ModuloLogin extends javax.swing.JFrame {
     /**
      * Creates new form ModuloLogin
      */
+    LogUsuario objUsuario = new LogUsuario();
     public ModuloLogin() {
         initComponents();
         this.setLocationRelativeTo(null);
+          this.setIconImage(new ImageIcon(getClass().getResource("/IMG/Sistema/iniciar-sesion.png")).getImage());
     }
 
     /**
@@ -31,12 +39,14 @@ public class ModuloLogin extends javax.swing.JFrame {
         Inicio = new javax.swing.JLabel();
         Usuario = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        Contraseña = new javax.swing.JPasswordField();
-        Sesion = new javax.swing.JButton();
-        Salir = new javax.swing.JButton();
+        txtUsername = new javax.swing.JTextField();
+        jpfPassword = new javax.swing.JPasswordField();
+        btnIniciarSesion = new javax.swing.JButton();
+        btnSalir = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         Fon = new javax.swing.JLabel();
+        lblImgUser = new javax.swing.JLabel();
         Fondo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -57,42 +67,74 @@ public class ModuloLogin extends javax.swing.JFrame {
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("CONTRASEÑA:");
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 330, -1, -1));
-        getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 290, 160, 30));
-        getContentPane().add(Contraseña, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 360, 160, 30));
+        getContentPane().add(txtUsername, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 290, 160, 30));
+        getContentPane().add(jpfPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 360, 160, 30));
 
-        Sesion.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        Sesion.setForeground(new java.awt.Color(255, 255, 255));
-        Sesion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMG/Sistema/accept.png"))); // NOI18N
-        Sesion.setText("Iniciar Sesión");
-        getContentPane().add(Sesion, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 440, -1, -1));
-
-        Salir.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        Salir.setForeground(new java.awt.Color(255, 255, 255));
-        Salir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMG/Sistema/Cancel.png"))); // NOI18N
-        Salir.setText("Salir");
-        Salir.addActionListener(new java.awt.event.ActionListener() {
+        btnIniciarSesion.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnIniciarSesion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMG/Sistema/abierto.png"))); // NOI18N
+        btnIniciarSesion.setText("Iniciar Sesión");
+        btnIniciarSesion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                SalirActionPerformed(evt);
+                btnIniciarSesionActionPerformed(evt);
             }
         });
-        getContentPane().add(Salir, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 440, 130, -1));
+        getContentPane().add(btnIniciarSesion, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 440, -1, -1));
+
+        btnSalir.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnSalir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMG/Sistema/Cancel.png"))); // NOI18N
+        btnSalir.setText("Salir");
+        btnSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalirActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 440, 130, -1));
+
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMG/Sistema/contrasena.png"))); // NOI18N
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 360, 40, 30));
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMG/Sistema/Imagen1.png"))); // NOI18N
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 170, -1, -1));
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 160, -1, -1));
 
         Fon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMG/Sistema/Cambio.png"))); // NOI18N
         getContentPane().add(Fon, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 50, -1, -1));
 
+        lblImgUser.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMG/Sistema/userlogin).png"))); // NOI18N
+        getContentPane().add(lblImgUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 290, 40, 30));
+
         Fondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMG/Sistema/Fondo.jpg"))); // NOI18N
-        getContentPane().add(Fondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(-260, -180, 680, 680));
+        getContentPane().add(Fondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(-260, 0, 680, 500));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void SalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SalirActionPerformed
+    private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
         // TODO add your handling code here:
         System.exit(0);
-    }//GEN-LAST:event_SalirActionPerformed
+    }//GEN-LAST:event_btnSalirActionPerformed
+
+    private void btnIniciarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarSesionActionPerformed
+        // TODO add your handling code here:
+              String password = new String(jpfPassword.getPassword());
+        if (txtUsername.getText().equals("") || password.equals("")) {
+            JOptionPane.showMessageDialog(null, "Debe llenar todos los datos", "ATENCION", JOptionPane.WARNING_MESSAGE);
+        } else {
+            try {
+                Usuario user = objUsuario.login(txtUsername.getText(), password);
+                if (user == null) {
+                    JOptionPane.showMessageDialog(null, "Usuario/Contraseña INCORRECTOS", "ERROR", JOptionPane.WARNING_MESSAGE);
+                } else {
+                   
+                    ModuloPrincipal mp = new ModuloPrincipal(user);
+                    mp.setVisible(true);
+                    this.dispose();
+                }
+
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "ERROR al recuperar" + ex);
+            }
+        }
+    }//GEN-LAST:event_btnIniciarSesionActionPerformed
 
     /**
      * @param args the command line arguments
@@ -130,15 +172,17 @@ public class ModuloLogin extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPasswordField Contraseña;
     private javax.swing.JLabel Fon;
     private javax.swing.JLabel Fondo;
     private javax.swing.JLabel Inicio;
-    private javax.swing.JButton Salir;
-    private javax.swing.JButton Sesion;
     private javax.swing.JLabel Usuario;
+    private javax.swing.JButton btnIniciarSesion;
+    private javax.swing.JButton btnSalir;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JPasswordField jpfPassword;
+    private javax.swing.JLabel lblImgUser;
+    private javax.swing.JTextField txtUsername;
     // End of variables declaration//GEN-END:variables
 }

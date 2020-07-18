@@ -33,6 +33,7 @@ import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -52,7 +53,8 @@ public class ModuloReporte extends javax.swing.JFrame {
     public ModuloReporte() {
         initComponents();
         jLabelFondo.setSize(500, 490);
-        
+        this.setLocationRelativeTo(null);
+        this.setIconImage(new ImageIcon(getClass().getResource("/IMG/Sistema/seo-report.png")).getImage());
     }
 
     private void limpiarTabla() {
@@ -242,7 +244,9 @@ public class ModuloReporte extends javax.swing.JFrame {
         fechaInicio = new com.toedter.calendar.JDateChooser();
         jLabelFondo = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Reportes");
+        setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabeltITULO.setBackground(new java.awt.Color(255, 255, 255));
@@ -364,9 +368,9 @@ public class ModuloReporte extends javax.swing.JFrame {
         try {
             generarPdf(txtAsunto.getText() + "_" + obtenerFechas(fechaInicio)+ "_" + cadena);
         } catch (FileNotFoundException ex) {
-            Logger.getLogger(ModuloPrueba.class.getName()).log(Level.SEVERE, null, ex);
+           
         } catch (DocumentException | IOException ex) {
-            Logger.getLogger(ModuloPrueba.class.getName()).log(Level.SEVERE, null, ex);
+          
         }
     }//GEN-LAST:event_jButtonGuardarMouseClicked
 

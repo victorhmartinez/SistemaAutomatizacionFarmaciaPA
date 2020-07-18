@@ -42,6 +42,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
@@ -77,7 +78,8 @@ public class ModuloVentas extends javax.swing.JFrame {
         this.setSize(new Dimension(790, 650));
         setLocationRelativeTo(null);
         this.setResizable(false);
-        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+                this.setIconImage(new ImageIcon(getClass().getResource("/IMG/Sistema/buy.png")).getImage());
+
         setTitle("Detalle de Venta");
         this.setMinimumSize(new Dimension(200, 200));
         this.txtCedulaCliente.setEnabled(false);
@@ -90,7 +92,7 @@ public class ModuloVentas extends javax.swing.JFrame {
         txtFecha.setText(fechaHoy.toString());
         llenarTablaClientes();
     }
-
+//Cargar medicamentos
     private void cargarMedicamentos(ArrayList<Medicamentos> listMedicamento) {
         try {
             objMedicamentos.getAllMedicamentos(listMedicamento);
@@ -99,6 +101,7 @@ public class ModuloVentas extends javax.swing.JFrame {
         }
         llenarTabla(listMedicamento);
     }
+    //Cargar clientes
     private void cargarClientes(ArrayList<Clientes> listClientes) {
         try {
             objLogCli.obtenerTodosClientes(listClientes);
@@ -106,12 +109,12 @@ public class ModuloVentas extends javax.swing.JFrame {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Se producido un error al cagar "
                     + "los datos de los clientes", "ATENCION", JOptionPane.ERROR_MESSAGE);
-            System.out.println(e);
+           
         }
 
     }
 
- 
+ //llenado de tabla Medicamentos
     private void llenarTabla(ArrayList<Medicamentos> listMedicamentos) {
 
         dtm = (DefaultTableModel) tblDatMedicamento.getModel();
@@ -125,7 +128,7 @@ public class ModuloVentas extends javax.swing.JFrame {
 
         }
     }
-
+//Limpiar campos
     private void limpiar() {
         txtCedulaCliente.setText("");
         txtNombreCliente.setText("");
@@ -140,7 +143,7 @@ public class ModuloVentas extends javax.swing.JFrame {
         subtotalT=0.0;
 
     }
-
+//Realizar venta
     private void realizarVenta() {
         DefaultTableModel dtm;
         dtm = (DefaultTableModel) tblPreVenta.getModel();
@@ -151,7 +154,7 @@ public class ModuloVentas extends javax.swing.JFrame {
 
         }
     }
-
+//Llenado de carrito
     private void llenarCarrito(int fila) {
         Medicamentos m;
         String idProd = String.valueOf(tblPreVenta.getValueAt(fila, 0));
@@ -160,7 +163,7 @@ public class ModuloVentas extends javax.swing.JFrame {
         int cant = Integer.parseInt(String.valueOf(tblPreVenta.getValueAt(fila, 2)));
         m.setExistenciTot(m.getExistenciTot() - cant);
         DetalleMedicamento dtMedicamento = new DetalleMedicamento(m.getIdMedicamento(), numDetalle, cant);
-        System.out.println("Detalles: "+dtMedicamento);
+       
         try {
             objDetalle.inserDetalleMedic(dtMedicamento);
         } catch (SQLException ex) {
@@ -169,6 +172,7 @@ public class ModuloVentas extends javax.swing.JFrame {
         lisCarrito.add(m);
 
     }
+    //llenado de tabla Clientes
     private void llenarTablaClientes() {
         DefaultTableModel modeloClientes;
         cargarClientes(listaClientes);
@@ -182,7 +186,7 @@ public class ModuloVentas extends javax.swing.JFrame {
 
         }
     }
-
+//Modificar el estado de los productos
     private void modificarStock() {
         for (Medicamentos medicamentos : lisCarrito) {
             try {
@@ -192,16 +196,28 @@ public class ModuloVentas extends javax.swing.JFrame {
             }
         }
     }
+    //Limpiar tabla de medicamentos
    private void limpiarTablaMedicamentos() {
         for (int i = 0; i < tblPreVenta.getRowCount(); i++) {
-           System.out.println("Validardtm "+dtm);
+         
            dtm.removeRow(i); 
-            System.out.println(i);
+          
             i -= 1;
-            System.out.println(i);
-            System.out.println(tblPreVenta.getRowCount());
+           
         }
     }
+   private void limpiarTablaClientes(){
+       DefaultTableModel mdeloClientes;
+       mdeloClientes=(DefaultTableModel)tblClientes.getModel();
+       for (int i = 0; i < tblClientes.getRowCount(); i++) {
+         
+           mdeloClientes.removeRow(i); 
+          
+            i -= 1;
+           
+        }
+}
+   //Enviar detalle
     private void setDetalle() {
         Clientes objClientes;
        objClientes = objLogCli.obtenerUnCliente(listaClientes, idCliente);
@@ -224,7 +240,7 @@ public class ModuloVentas extends javax.swing.JFrame {
         }
 
     }
-    
+    //generacion de pdf
     public void generarPdf(String nombrePdf) throws FileNotFoundException, DocumentException, BadElementException, IOException{
         
         FileOutputStream archivo = new FileOutputStream(nombrePdf + ".pdf");
@@ -358,11 +374,11 @@ public class ModuloVentas extends javax.swing.JFrame {
     private void initComponents() {
 
         jFormattedTextField1 = new javax.swing.JFormattedTextField();
-        jDialog1 = new javax.swing.JDialog();
+        mostrarClientes = new javax.swing.JDialog();
         jLabelRegistro = new javax.swing.JLabel();
         jButtonBuscador = new javax.swing.JButton();
         jLabelNombre = new javax.swing.JLabel();
-        jButtonAgregar = new javax.swing.JButton();
+        btnRegistrar = new javax.swing.JButton();
         txtCedulaBuscar = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
         tblClientes = new javax.swing.JTable();
@@ -415,13 +431,13 @@ public class ModuloVentas extends javax.swing.JFrame {
 
         jFormattedTextField1.setText("jFormattedTextField1");
 
-        jDialog1.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        mostrarClientes.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabelRegistro.setBackground(new java.awt.Color(0, 0, 0));
         jLabelRegistro.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabelRegistro.setForeground(new java.awt.Color(255, 255, 255));
         jLabelRegistro.setText("CLIENTES REGISTRADOS");
-        jDialog1.getContentPane().add(jLabelRegistro, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 40, -1, 30));
+        mostrarClientes.getContentPane().add(jLabelRegistro, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 40, -1, 30));
 
         jButtonBuscador.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMG/Sistema/searchperson.png"))); // NOI18N
         jButtonBuscador.addActionListener(new java.awt.event.ActionListener() {
@@ -429,23 +445,23 @@ public class ModuloVentas extends javax.swing.JFrame {
                 jButtonBuscadorActionPerformed(evt);
             }
         });
-        jDialog1.getContentPane().add(jButtonBuscador, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 140, 40, 30));
+        mostrarClientes.getContentPane().add(jButtonBuscador, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 140, 40, 30));
 
         jLabelNombre.setBackground(new java.awt.Color(255, 255, 255));
         jLabelNombre.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabelNombre.setForeground(new java.awt.Color(255, 255, 255));
         jLabelNombre.setText("Cédula");
-        jDialog1.getContentPane().add(jLabelNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 100, 180, 40));
+        mostrarClientes.getContentPane().add(jLabelNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 100, 180, 40));
 
-        jButtonAgregar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMG/Sistema/accept.png"))); // NOI18N
-        jButtonAgregar.setText("Agregar");
-        jButtonAgregar.addActionListener(new java.awt.event.ActionListener() {
+        btnRegistrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMG/Sistema/new1.png"))); // NOI18N
+        btnRegistrar.setText("Registrar");
+        btnRegistrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonAgregarActionPerformed(evt);
+                btnRegistrarActionPerformed(evt);
             }
         });
-        jDialog1.getContentPane().add(jButtonAgregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 390, -1, -1));
-        jDialog1.getContentPane().add(txtCedulaBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 140, 450, 30));
+        mostrarClientes.getContentPane().add(btnRegistrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 390, -1, -1));
+        mostrarClientes.getContentPane().add(txtCedulaBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 140, 450, 30));
 
         tblClientes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -462,11 +478,11 @@ public class ModuloVentas extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(tblClientes);
 
-        jDialog1.getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 200, 530, 180));
+        mostrarClientes.getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 200, 530, 180));
 
         jLabel2Fondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMG/Sistema/Fondo.jpg"))); // NOI18N
         jLabel2Fondo.setText("jLabel2");
-        jDialog1.getContentPane().add(jLabel2Fondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(-220, -110, 1030, 670));
+        mostrarClientes.getContentPane().add(jLabel2Fondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(-220, -110, 1030, 670));
 
         mostrarMedicamentos.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -523,7 +539,9 @@ public class ModuloVentas extends javax.swing.JFrame {
 
         mostrarMedicamentos.getContentPane().add(jPanel4, java.awt.BorderLayout.CENTER);
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Ventas");
+        setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jDesktopPane1.setBackground(new java.awt.Color(229, 240, 241));
@@ -685,6 +703,11 @@ public class ModuloVentas extends javax.swing.JFrame {
                 btnSalirMouseClicked(evt);
             }
         });
+        btnSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalirActionPerformed(evt);
+            }
+        });
         jPanel1.add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 460, -1, -1));
 
         jDesktopPane1.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 117, 780, 510));
@@ -737,14 +760,14 @@ public class ModuloVentas extends javax.swing.JFrame {
         try{
             generarPdf(txtCedulaCliente.getText()+"_"+txtNombreCliente.getText()+"_"+cadena);
         }catch(FileNotFoundException ex){
-            Logger.getLogger(ModuloPrueba.class.getName()).log(Level.SEVERE, null, ex);
+            
         }catch(DocumentException | IOException ex){
-            Logger.getLogger(ModuloPrueba.class.getName()).log(Level.SEVERE, null, ex);
+           
         }        
         setDetalle();
         realizarVenta();
         objDetalle.imprimirCarrito(lisCarrito);
-        System.out.println(numDetalle);
+       
         modificarStock();
         limpiar();
         lisMedicamentos.clear();
@@ -769,7 +792,7 @@ public class ModuloVentas extends javax.swing.JFrame {
 
     private void btnSalirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSalirMouseClicked
         // TODO add your handling code here:
-        System.exit(0);
+        this.dispose();
 
     }//GEN-LAST:event_btnSalirMouseClicked
 
@@ -780,20 +803,21 @@ public class ModuloVentas extends javax.swing.JFrame {
               //idSelect = tblPreVenta.getSelectedRow();
               DefaultTableModel modeloPreventa = (DefaultTableModel) tblPreVenta.getModel();
             
-               System.out.println("debe eliminar");
-               System.out.println("entro AL IF");
+              
                modeloPreventa.removeRow(tblPreVenta.getSelectedRow()); 
-               System.out.println("debe elIMINAR LA FILA "+tblPreVenta.getSelectedRow());
+               
     }//GEN-LAST:event_btnEliminarPActionPerformed
 }
  }
     private void btnBuscarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarClienteActionPerformed
 
 // TODO add your handling code here:
-        jDialog1.setSize(800, 490);
-        jDialog1.setLocationRelativeTo(null);
-        jDialog1.setModal(true);
-        jDialog1.setVisible(true);
+        mostrarClientes.setSize(800, 490);
+        mostrarClientes.setLocationRelativeTo(null);
+        mostrarClientes.setIconImage(new ImageIcon(getClass().getResource("/IMG/Sistema/cliente.png")).getImage());
+        mostrarClientes.setModal(true);
+        mostrarClientes.setVisible(true);
+        
         
     }//GEN-LAST:event_btnBuscarClienteActionPerformed
 
@@ -809,6 +833,7 @@ public class ModuloVentas extends javax.swing.JFrame {
         // TODO add your handling code here:
         mostrarMedicamentos.setSize(580, 475);
         mostrarMedicamentos.setLocationRelativeTo(null);
+        mostrarMedicamentos.setIconImage(new ImageIcon(getClass().getResource("/IMG/Sistema/medicamentos.png")).getImage());
         mostrarMedicamentos.setModal(true);
         mostrarMedicamentos.setVisible(true);
     }//GEN-LAST:event_btnBuscarMedicamentoActionPerformed
@@ -847,7 +872,7 @@ public class ModuloVentas extends javax.swing.JFrame {
                 idSelect = Integer.parseInt(tblDatMedicamento.getValueAt(fsl, 0).toString());
                 m = objMedicamentos.getOneMedicamento(lisMedicamentos, idSelect);
                 if (objDetalle.cantDisponible(m, cant)) {
-                    System.out.println("este se va vender" + objMedicamentos.getOneMedicamento(lisMedicamentos, idSelect));
+                   
                     codigo=String.valueOf(m.getIdMedicamento());
                     nombre=m.getNombreMedic();
                     cantP=String.valueOf(cant);
@@ -871,9 +896,7 @@ public class ModuloVentas extends javax.swing.JFrame {
                     txtSubtotal.setText(String.valueOf(subtotalT));
                     txtIVA.setText(String.valueOf(iva));
                     txtTotal.setText(String.valueOf(totalT));
-                    System.out.println("Subtotal: "+subtotalT);
-                    System.out.println("iva: "+iva);
-                    System.out.println("Total: "+totalT);
+                
                 }
             }
         }
@@ -894,22 +917,33 @@ public class ModuloVentas extends javax.swing.JFrame {
         //Presentamos los datos del medicamento en los txt
         txtCedulaCliente.setText(objClientes.getIdentificacion());
         txtNombreCliente.setText(objClientes.getNombreCli() +" "+ objClientes.getApellidoCli());
-        txtDireccion.setText("Bernardo V");
-        txtCorreo.setText("cnt@@gmail.com");
+        txtDireccion.setText(objClientes.getDireccion().getCalleP()+","+objClientes.getDireccion().getCalleS()+"/"+objClientes.getDireccion().getCiudad());
+        txtCorreo.setText(objClientes.getContactos().getCorreo());
         
          JOptionPane.showMessageDialog(null,"Cliente Agregado");
 
     }//GEN-LAST:event_tblClientesMouseClicked
 
-    private void jButtonAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAgregarActionPerformed
+    private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
         // TODO add your handling code here:
+     
+        ModuloClientes mc = new ModuloClientes (txtCedulaBuscar.getText());
+        mc.setVisible(true);
         listaClientes.clear();
-        cargarClientes(listaClientes);
-    }//GEN-LAST:event_jButtonAgregarActionPerformed
+        limpiarTablaClientes();
+        llenarTablaClientes();
+        mostrarClientes.dispose();
+     
+        
+    }//GEN-LAST:event_btnRegistrarActionPerformed
 
     private void jButtonBuscadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBuscadorActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButtonBuscadorActionPerformed
+
+    private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnSalirActionPerformed
 
     /**
      * @param args the command line arguments
@@ -955,12 +989,11 @@ public class ModuloVentas extends javax.swing.JFrame {
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnEliminarP;
     private javax.swing.JButton btnRealizarVenta;
+    private javax.swing.JButton btnRegistrar;
     private javax.swing.JButton btnSalir;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButtonAgregar;
     private javax.swing.JButton jButtonBuscador;
     private javax.swing.JDesktopPane jDesktopPane1;
-    private javax.swing.JDialog jDialog1;
     private javax.swing.JFormattedTextField jFormattedTextField1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -990,6 +1023,7 @@ public class ModuloVentas extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JLabel lblFondo2;
+    private javax.swing.JDialog mostrarClientes;
     private javax.swing.JDialog mostrarMedicamentos;
     private javax.swing.JTable tblClientes;
     private javax.swing.JTable tblDatMedicamento;

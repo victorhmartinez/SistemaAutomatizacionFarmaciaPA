@@ -15,7 +15,9 @@ public class DATClientes {
 
     public ResultSet getAllCliente() throws SQLException {
         Statement consulta = conecta.conectarBD().createStatement();
-        String sql = "SELECT nombreCli,apellidoCli,identificacion FROM cliente";
+        String sql = "SELECT *"
+                + " FROM cliente cl, direccion d,contactos c "
+                + "WHERe cl.idDireccion=d.idDireccion AND cl.idContactos=c.idContactos";
         return consulta.executeQuery(sql);
     }
 

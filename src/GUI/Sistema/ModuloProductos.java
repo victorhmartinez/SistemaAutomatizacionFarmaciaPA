@@ -18,6 +18,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableColumnModel;
@@ -49,7 +50,7 @@ public class ModuloProductos extends javax.swing.JFrame {
         this.setResizable(false);
         setTitle("Productos");
         this.setMinimumSize(new Dimension(200, 200));
-
+this.setIconImage(new ImageIcon(getClass().getResource("/IMG/Sistema/medical.png")).getImage());
         llenarTabla();
 
     }
@@ -81,10 +82,9 @@ public class ModuloProductos extends javax.swing.JFrame {
     private void limpiarTabla() {
         for (int i = 0; i < tblMedicamentos.getRowCount(); i++) {
             dtm.removeRow(i);
-            System.out.println(i);
+            
             i -= 1;
-            System.out.println(i);
-            System.out.println(tblMedicamentos.getRowCount());
+          
         }
     }
 
@@ -146,7 +146,7 @@ public class ModuloProductos extends javax.swing.JFrame {
 
         jFormattedTextField1.setText("jFormattedTextField1");
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         jDesktopPane1.setBackground(new java.awt.Color(229, 240, 241));
         jDesktopPane1.setPreferredSize(new java.awt.Dimension(800, 600));
@@ -550,7 +550,7 @@ public class ModuloProductos extends javax.swing.JFrame {
                 fechaCaduc,
                 this.txtLote.getText()
         );
-        System.out.println(objMedicamentos.toString()); //una demostracion de que se esta mandando bien los datos
+      //una demostracion de que se esta mandando bien los datos
         try {
             obMedic.insertarMedicamento(objMedicamentos);
         } catch (SQLException ex) {

@@ -10,7 +10,13 @@ public class Contactos {
 
     public Contactos() {
     }
-
+    
+    public Contactos(String telefono, String celular, String correo) {
+        this.telefono = telefono;
+        this.celular = celular;
+        this.correo = correo;
+    }
+    
     public Contactos(int idContactos, String telefono, String celular, String correo) {
         this.idContactos = idContactos;
         this.telefono = telefono;

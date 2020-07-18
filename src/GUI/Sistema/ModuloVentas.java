@@ -424,6 +424,11 @@ public class ModuloVentas extends javax.swing.JFrame {
         jDialog1.getContentPane().add(jLabelRegistro, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 40, -1, 30));
 
         jButtonBuscador.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMG/Sistema/searchperson.png"))); // NOI18N
+        jButtonBuscador.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonBuscadorActionPerformed(evt);
+            }
+        });
         jDialog1.getContentPane().add(jButtonBuscador, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 140, 40, 30));
 
         jLabelNombre.setBackground(new java.awt.Color(255, 255, 255));
@@ -901,6 +906,10 @@ public class ModuloVentas extends javax.swing.JFrame {
         listaClientes.clear();
         cargarClientes(listaClientes);
     }//GEN-LAST:event_jButtonAgregarActionPerformed
+
+    private void jButtonBuscadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBuscadorActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButtonBuscadorActionPerformed
 
     /**
      * @param args the command line arguments

@@ -11,7 +11,6 @@ public class Direccion {
 
     public Direccion() {
     }
-
     public Direccion(int idDireccion, String calleP, String calleS, String numCasa, String referencia, String ciudad) {
         this.idDireccion = idDireccion;
         this.calleP = calleP;
@@ -20,6 +19,15 @@ public class Direccion {
         this.referencia = referencia;
         this.ciudad = ciudad;
     }
+    public Direccion( String calleP, String calleS, String numCasa, String referencia, String ciudad) {
+        this.calleP = calleP;
+        this.calleS = calleS;
+        this.numCasa = numCasa;
+        this.referencia = referencia;
+        this.ciudad = ciudad;
+    }
+    
+    
 
     public int getIdDireccion() {
         return idDireccion;

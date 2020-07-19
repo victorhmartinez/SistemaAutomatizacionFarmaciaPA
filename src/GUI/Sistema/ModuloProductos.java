@@ -209,6 +209,11 @@ this.setIconImage(new ImageIcon(getClass().getResource("/IMG/Sistema/medical.png
                 btnRealizarComposicionMouseClicked(evt);
             }
         });
+        btnRealizarComposicion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRealizarComposicionActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -600,6 +605,12 @@ this.setIconImage(new ImageIcon(getClass().getResource("/IMG/Sistema/medical.png
         // TODO add your handling code here:
          limpiar();
     }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void btnRealizarComposicionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRealizarComposicionActionPerformed
+        // TODO add your handling code here:
+        ModuloComposicion mc = new ModuloComposicion();
+        mc.setVisible(true);
+    }//GEN-LAST:event_btnRealizarComposicionActionPerformed
 
     /**
      * @param args the command line arguments

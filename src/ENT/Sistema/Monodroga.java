@@ -48,5 +48,10 @@ public class Monodroga {
     public void setListCompone(ArrayList<Compone> listCompone) {
         this.listCompone = listCompone;
     }
+
+    @Override
+    public String toString() {
+        return  MonoDrogaNombre;
+    }
     
 }

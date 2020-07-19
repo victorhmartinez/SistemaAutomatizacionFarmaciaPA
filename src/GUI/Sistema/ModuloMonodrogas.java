@@ -7,13 +7,17 @@ package GUI.Sistema;
 
 import ENT.Sistema.Monodroga;
 import LOG.Sistema.ObtenerMedicamentos;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 
 /**
  *
@@ -28,6 +32,7 @@ public class ModuloMonodrogas extends javax.swing.JFrame {
     ObtenerMedicamentos obMedica = new ObtenerMedicamentos();
     DefaultTableModel dtm;
     int idSelect;
+      TableRowSorter trs = null;
 
     public ModuloMonodrogas() {
         initComponents();
@@ -103,6 +108,11 @@ private void cargarTabla(){
                 txtNombreMonodrogaActionPerformed(evt);
             }
         });
+        txtNombreMonodroga.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNombreMonodrogaKeyTyped(evt);
+            }
+        });
 
         btnCancelar.setFont(new java.awt.Font("Microsoft JhengHei UI", 1, 12)); // NOI18N
         btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMG/Sistema/Cancel2.png"))); // NOI18N
@@ -147,7 +157,7 @@ private void cargarTabla(){
         });
 
         btnEditar.setFont(new java.awt.Font("Microsoft JhengHei UI", 1, 12)); // NOI18N
-        btnEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMG/Sistema/cancel.png"))); // NOI18N
+        btnEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMG/Sistema/edit.png"))); // NOI18N
         btnEditar.setText("EDITAR");
         btnEditar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -161,7 +171,7 @@ private void cargarTabla(){
         });
 
         btnEliminar.setFont(new java.awt.Font("Microsoft JhengHei UI", 1, 12)); // NOI18N
-        btnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMG/Sistema/cancel.png"))); // NOI18N
+        btnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMG/Sistema/delete.png"))); // NOI18N
         btnEliminar.setText("ELIMINAR");
         btnEliminar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -211,7 +221,7 @@ private void cargarTabla(){
                     .addComponent(btnIngresarMonodroga)
                     .addComponent(btnCancelar))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 133, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 111, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSalir)
@@ -234,7 +244,7 @@ private void cargarTabla(){
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(33, Short.MAX_VALUE))
         );
 
         jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMG/Sistema/medical.png"))); // NOI18N
@@ -285,7 +295,7 @@ private void cargarTabla(){
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jDesktopPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 333, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 11, Short.MAX_VALUE))
+                .addGap(0, 38, Short.MAX_VALUE))
         );
 
         pack();
@@ -399,6 +409,12 @@ private void cargarTabla(){
         cargarTabla();
          limpiarCampos();
     }//GEN-LAST:event_btnEditarActionPerformed
+
+    private void txtNombreMonodrogaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreMonodrogaKeyTyped
+        // TODO add your handling code here:
+    
+        
+    }//GEN-LAST:event_txtNombreMonodrogaKeyTyped
 
     /**
      * @param args the command line arguments

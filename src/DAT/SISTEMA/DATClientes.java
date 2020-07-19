@@ -82,7 +82,7 @@ public class DATClientes {
                 + "', d.numCasa = '"+ clientes.getDireccion().getNumCasa()
                 + "', d.referencia = '"+ clientes.getDireccion().getReferencia()
                 + "', d.ciudad = '"+ clientes.getDireccion().getCiudad()
-                + "' WHERE  e.idCliente = " + clientes.getIdCliente();
+                + "' WHERE  cli.idCliente = " + clientes.getIdCliente();
         resultado = consulta.executeUpdate(sql);
         consulta.close();
         return resultado;

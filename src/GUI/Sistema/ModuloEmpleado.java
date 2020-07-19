@@ -753,7 +753,7 @@ public class ModuloEmpleado extends javax.swing.JFrame {
             @Override
             public void keyReleased(KeyEvent e) {
                 //Designamos a la fila en comluna en la que queremos buscar en este caso por nombre "1" y con lo debe compara
-                trs.setRowFilter(RowFilter.regexFilter("(?i)" + txtBuscarEmpleado.getText(), 1));
+                trs.setRowFilter(RowFilter.regexFilter("(?i)" + txtBuscarEmpleado.getText(), 2));
             }
 
         });

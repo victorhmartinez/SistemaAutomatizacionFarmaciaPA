@@ -622,11 +622,11 @@ public class ModuloClientes extends javax.swing.JFrame {
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         // TODO add your handling code here:
-        int descision = JOptionPane.showConfirmDialog(null, " Eliminar Empleado");
+        int descision = JOptionPane.showConfirmDialog(null, " Eliminar Cliente ?");
         if (descision == JOptionPane.YES_OPTION) {
             try {
                 if (objLogCli.eliminarCliente(id)) {
-                    JOptionPane.showMessageDialog(null, "Empleado Eliminado");
+                    JOptionPane.showMessageDialog(null, "Cliente Eliminado");
                 }
             } catch (ClassNotFoundException ex) {
                JOptionPane.showMessageDialog(null, "Error al eliminar"+ex);

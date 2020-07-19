@@ -1,5 +1,6 @@
 package DAT.SISTEMA;
 
+import ENT.Sistema.Compone;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -108,5 +109,21 @@ public class DATMedicamentos {
         resultado = consulta.executeUpdate(sql);
         consulta.close();
         return resultado;
+    }
+       public int insertCompone(Compone objCompone) throws SQLException {
+        int intRetorno = 0;
+        Statement st = conecta.conectarBD().createStatement();
+        String query = "INSERT INTO compone(Medicamento_idMedicamento,	MonoDroga_idMonoDroga,	porcentaje)"
+                + "VALUES ("
+                + objCompone.getMedicamento_idMedicamento().getIdMedicamento()+ ","
+                + objCompone.getMonoDroga_idMonoDroga().getIdMonoDroga()
+                + ",'"+objCompone.getPorcentaje()+"')";
+        intRetorno = st.executeUpdate(query); // envia la sentencia a la bd
+        return intRetorno;
+    }
+        public ResultSet getAllCompone() throws SQLException {
+        Statement consulta = conecta.conectarBD().createStatement();
+        String sql ="SELECT me.idMedicamento,me.nombreMedic,mon.idMonoDroga,mon.MonoDrogaNombre,com.porcentaje FROM compone com,medicamento me,monodroga mon WHERE com.Medicamento_idMedicamento=me.idMedicamento AND com.MonoDroga_idMonoDroga = mon.idMonoDroga ";
+        return consulta.executeQuery(sql);
     }
 }

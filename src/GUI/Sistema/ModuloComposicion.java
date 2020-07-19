@@ -5,14 +5,18 @@
  */
 package GUI.Sistema;
 
+import ENT.Sistema.Compone;
 import ENT.Sistema.Medicamentos;
 import ENT.Sistema.Monodroga;
 import LOG.Sistema.ObtenerMedicamentos;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -23,47 +27,92 @@ public class ModuloComposicion extends javax.swing.JFrame {
     /**
      * Creates new form Monodroga
      */
-   // ModuloMonodrogas objMonodrogas = new ModuloMonodrogas();
+    // ModuloMonodrogas objMonodrogas = new ModuloMonodrogas();
     ObtenerMedicamentos obMedicamentos = new ObtenerMedicamentos();
+    ArrayList<Compone> listCompone = new ArrayList<>();
+    DefaultTableModel dtm;
+
     public ModuloComposicion() {
         initComponents();
-        setLocationRelativeTo(null);   
+        setLocationRelativeTo(null);
         setTitle("Composición");
-       cargarMedicamentos();
-       cargarMonodroga();
-       this.setIconImage(new ImageIcon(getClass().getResource("/IMG/Sistema/medicine.png")).getImage());
+        cargarMedicamentos();
+        cargarMonodroga();
+        llenarTabla();
+        this.setIconImage(new ImageIcon(getClass().getResource("/IMG/Sistema/medicine.png")).getImage());
     }
-    private  void cargarMedicamentos(){
-        ArrayList<Medicamentos>  listMedicamentos = new ArrayList<>();
-         try {
+
+    private void cargarMedicamentos() {
+        ArrayList<Medicamentos> listMedicamentos = new ArrayList<>();
+        try {
             obMedicamentos.getAllMedicamentos(listMedicamentos);
-             DefaultComboBoxModel modeloComboMedicamento = new DefaultComboBoxModel();
+            DefaultComboBoxModel modeloComboMedicamento = new DefaultComboBoxModel();
 
             for (Medicamentos medicamento : listMedicamentos) {
-                modeloComboMedicamento.addElement(medicamento.getNombreMedic());
+                modeloComboMedicamento.addElement(medicamento);
             }
             cmbMedicamento.setModel(modeloComboMedicamento);
-           
+
         } catch (Exception ex) {
-             JOptionPane.showMessageDialog(null, "Error al eliminar");
+            JOptionPane.showMessageDialog(null, "Error al eliminar");
         }
     }
-     private void cargarMonodroga(){
-          ArrayList<Monodroga>  listMonodroga = new ArrayList<>();
-         try {
+
+    private void cargarMonodroga() {
+        ArrayList<Monodroga> listMonodroga = new ArrayList<>();
+        try {
             obMedicamentos.getAllMonodroga(listMonodroga);
-             DefaultComboBoxModel modeloComboMonodroga = new DefaultComboBoxModel();
+            DefaultComboBoxModel modeloComboMonodroga = new DefaultComboBoxModel();
 
             for (Monodroga monodroga : listMonodroga) {
-                modeloComboMonodroga.addElement(monodroga.getMonoDrogaNombre());
+                modeloComboMonodroga.addElement(monodroga);
             }
             cmbMonodroga.setModel(modeloComboMonodroga);
-           
+
         } catch (Exception ex) {
-             JOptionPane.showMessageDialog(null, "Error al eliminar");
+            JOptionPane.showMessageDialog(null, "Error al eliminar");
         }
     }
-   
+
+    public void cargarCompone(ArrayList<Compone> listCompone) {
+        try {
+            obMedicamentos.getAllCompone(listCompone);
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al cargar"+ex, "ERROR" , JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void llenarTabla() {
+        cargarCompone(listCompone);
+        dtm = (DefaultTableModel) tblComposiciones.getModel();
+        Object[] tablFilas = new Object[dtm.getColumnCount()];
+        for (Compone compone : listCompone) {
+            tablFilas[0] = compone.getMedicamento_idMedicamento().getNombreMedic();
+            tablFilas[1] = compone.getMonoDroga_idMonoDroga().getMonoDrogaNombre();
+            tablFilas[2] = compone.getPorcentaje();
+
+            dtm.addRow(tablFilas);
+
+        }
+    }
+      private void limpiarTabla() {
+        for (int i = 0; i < tblComposiciones.getRowCount(); i++) {
+            dtm.removeRow(i);
+            i -= 1;
+        }
+    }
+
+    private void insertCompone(Compone compone) {
+        try {
+            obMedicamentos.insertCompone(compone);
+            JOptionPane.showMessageDialog(null, "Composicion Registrada", "ATENCION", JOptionPane.OK_OPTION);
+            System.out.println(compone.getMedicamento_idMedicamento().getIdMedicamento() + " " + compone.getMonoDroga_idMonoDroga().getIdMonoDroga() + " " + compone.getPorcentaje());
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al insertar Monodroga", "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (ClassNotFoundException ex) {
+            JOptionPane.showMessageDialog(null, "Error al insertar Monodroga", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -92,8 +141,7 @@ public class ModuloComposicion extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         btnSalir = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setResizable(false);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jDesktopPane1.setBackground(new java.awt.Color(229, 240, 241));
         jDesktopPane1.setPreferredSize(new java.awt.Dimension(800, 600));
@@ -108,17 +156,24 @@ public class ModuloComposicion extends javax.swing.JFrame {
                 btnCancelarMouseClicked(evt);
             }
         });
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
 
         btnIngresarComposicion.setFont(new java.awt.Font("Microsoft JhengHei UI", 1, 12)); // NOI18N
         btnIngresarComposicion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMG/Sistema/insert.png"))); // NOI18N
         btnIngresarComposicion.setText("INGRESAR");
+        btnIngresarComposicion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnIngresarComposicionActionPerformed(evt);
+            }
+        });
 
         tblComposiciones.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+
             },
             new String [] {
                 "Medicamento", "Monodroga", "Porcentaje"
@@ -139,6 +194,11 @@ public class ModuloComposicion extends javax.swing.JFrame {
         btnNuevoMonodroga.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnNuevoMonodrogaMouseClicked(evt);
+            }
+        });
+        btnNuevoMonodroga.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNuevoMonodrogaActionPerformed(evt);
             }
         });
 
@@ -168,7 +228,7 @@ public class ModuloComposicion extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnIngresarComposicion, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26)
+                .addGap(18, 18, 18)
                 .addComponent(btnCancelar)
                 .addGap(22, 22, 22))
         );
@@ -190,13 +250,12 @@ public class ModuloComposicion extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtPorcentaje, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnIngresarComposicion)
                     .addComponent(btnCancelar))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 109, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -212,8 +271,8 @@ public class ModuloComposicion extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMG/Sistema/medicine.png"))); // NOI18N
@@ -277,7 +336,7 @@ public class ModuloComposicion extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jDesktopPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 363, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(0, 19, Short.MAX_VALUE))
         );
 
         pack();
@@ -286,16 +345,15 @@ public class ModuloComposicion extends javax.swing.JFrame {
     private void btnSalirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSalirMouseClicked
         // TODO add your handling code here:
         System.exit(0);
-        
+
     }//GEN-LAST:event_btnSalirMouseClicked
 
     private void btnCancelarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCancelarMouseClicked
         // TODO add your handling code here:
         txtPorcentaje.setText("");
-        this.setVisible(false);
-        cmbMonodroga.removeAllItems();
-        cmbMedicamento.removeAllItems();
+       
         
+
 
     }//GEN-LAST:event_btnCancelarMouseClicked
 
@@ -304,6 +362,27 @@ public class ModuloComposicion extends javax.swing.JFrame {
 
 //        objMonodrogas.setVisible(true);
     }//GEN-LAST:event_btnNuevoMonodrogaMouseClicked
+
+    private void btnIngresarComposicionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarComposicionActionPerformed
+     Medicamentos objMedicamento= (Medicamentos)cmbMedicamento.getSelectedItem();
+     Monodroga objMonodroga= (Monodroga)cmbMonodroga.getSelectedItem();
+     Compone objCompone = new Compone(objMedicamento, objMonodroga, txtPorcentaje.getText());
+        insertCompone(objCompone);
+     listCompone.clear();
+     limpiarTabla();
+     llenarTabla();
+    }//GEN-LAST:event_btnIngresarComposicionActionPerformed
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void btnNuevoMonodrogaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoMonodrogaActionPerformed
+        // TODO add your handling code here:
+        ModuloMonodrogas mc = new ModuloMonodrogas();
+        mc.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnNuevoMonodrogaActionPerformed
 
     /**
      * @param args the command line arguments

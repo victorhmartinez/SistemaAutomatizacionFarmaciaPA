@@ -1,5 +1,4 @@
 package LOG.Sistema;
-
 import DAT.SISTEMA.DATClientes;
 import ENT.Sistema.Clientes;
 import ENT.Sistema.Contactos;
@@ -50,4 +49,74 @@ public class LogClientes {
 
     }
 
+    public void insertEmpleado(Clientes cli) throws SQLException {
+        int var = 0;
+        var = objDatClientes.insertCliente(cli);
+//        if (var==1) {
+//            System.out.println("Ingresado bien");
+//        }else{
+//            System.out.println("no se ingreso");
+//        }
+    }
+
+    public void insertDireccion(Direccion dir) throws SQLException {
+        objDatClientes.insertDireccion(dir);
+    }
+
+    public void insertContactos(Contactos contac) throws SQLException {
+        objDatClientes.insertContactos(contac);
+    }
+
+    public int obtenerUltimaDireccion() throws SQLException {
+        int idDir = 0;
+
+        try {
+            ResultSet r = objDatClientes.obtenerUltimaDireccion();
+            while (r.next()) {
+                idDir = r.getInt("idDir");
+            }
+        } catch (Exception e) {
+
+        }
+        return idDir;
+
+    }
+    public int obtenerUltimoContacto() throws SQLException {
+        int idContactos = 0;
+       
+        try {
+            ResultSet r = objDatClientes.obtenerUltimoContacto();
+            while (r.next()) {
+                idContactos = r.getInt("idCon");
+            }
+        } catch (Exception e) {
+
+        }
+        return idContactos;
+    }
+    
+     public Clientes obtenerClienteBuscado(ArrayList<Clientes> listClientes, int id) {
+        for (Clientes m : listClientes) {
+            if (m.getIdCliente()== id) {
+                return m;
+            }
+        }
+        return null;
+    }
+
+     public boolean editarCliente(Clientes cli) throws SQLException, ClassNotFoundException {
+        int resultado = objDatClientes.editarCliente(cli);
+        if (resultado == 0) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+    
+    public boolean eliminarCliente(String idCliente) throws ClassNotFoundException, SQLException {
+        if (objDatClientes.eliminarCliente(idCliente)==0) {
+            return false;
+        }else
+            return true;
+    }
 }

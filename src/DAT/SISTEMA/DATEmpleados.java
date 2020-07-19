@@ -112,7 +112,6 @@ public class DATEmpleados {
         resultado = consulta.executeUpdate(sql);
         consulta.close();
         return resultado;
-
     }
     
     public int eliminarEmpleado(int idEmpleado) throws SQLException, ClassNotFoundException {

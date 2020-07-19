@@ -622,6 +622,11 @@ public class ModuloEmpleado extends javax.swing.JFrame {
         });
 
         txtBuscarEmpleado.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        txtBuscarEmpleado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtBuscarEmpleadoActionPerformed(evt);
+            }
+        });
         txtBuscarEmpleado.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtBuscarEmpleadoKeyTyped(evt);
@@ -651,13 +656,14 @@ public class ModuloEmpleado extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, BuscLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(BuscLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtBuscarEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(BuscLayout.createSequentialGroup()
-                        .addComponent(btnAgregarUsuario)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGroup(BuscLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtBuscarEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnAgregarUsuario))
+                        .addGap(0, 2, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 164, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 166, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -805,6 +811,10 @@ public class ModuloEmpleado extends javax.swing.JFrame {
         llenarTblEmpleados();
         limpiarDatosEmpleado();
     }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void txtBuscarEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBuscarEmpleadoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtBuscarEmpleadoActionPerformed
 
     /**
      * @param args the command line arguments

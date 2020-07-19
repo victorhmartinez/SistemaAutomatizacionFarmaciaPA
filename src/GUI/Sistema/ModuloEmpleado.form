@@ -707,15 +707,17 @@
               <Group type="102" alignment="1" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="txtBuscarEmpleado" min="-2" pref="30" max="-2" attributes="0"/>
                       <Component id="jLabel1" max="32767" attributes="0"/>
                       <Group type="102" attributes="0">
-                          <Component id="btnAgregarUsuario" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="txtBuscarEmpleado" min="-2" pref="30" max="-2" attributes="0"/>
+                              <Component id="btnAgregarUsuario" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="0" pref="2" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jScrollPane1" pref="164" max="32767" attributes="0"/>
+                  <Component id="jScrollPane1" pref="166" max="32767" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -835,6 +837,7 @@
             </Property>
           </Properties>
           <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtBuscarEmpleadoActionPerformed"/>
             <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtBuscarEmpleadoKeyTyped"/>
           </Events>
         </Component>

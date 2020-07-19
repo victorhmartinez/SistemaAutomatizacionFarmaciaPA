@@ -108,6 +108,5 @@ public class DATMedicamentos {
         resultado = consulta.executeUpdate(sql);
         consulta.close();
         return resultado;
-
     }
 }

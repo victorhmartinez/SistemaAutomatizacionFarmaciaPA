@@ -36,7 +36,7 @@ public class ModuloProductos extends javax.swing.JFrame {
      */
     ArrayList<Medicamentos> listMedicamentos = new ArrayList<>();
     ObtenerMedicamentos obMedic = new ObtenerMedicamentos();
-    ModuloMonodrogas objMonodrogas = new ModuloMonodrogas();
+   
     DefaultTableModel dtm;
 
     TableRowSorter trs = null;

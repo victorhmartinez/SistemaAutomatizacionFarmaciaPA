@@ -24,7 +24,7 @@ public class LogReportes {
     public void getReportes(ArrayList<DetalleFactura> listReportes,Date fechaInicio,Date fechaFin) throws SQLException{
         ResultSet rs = datDetalles.getReportes(fechaInicio, fechaFin);
         while (rs.next()) {  
-            Clientes objClientes = new Clientes(rs.getInt("idCliente"), rs.getString("nombreCli"), rs.getString("apellidoCli"), rs.getString("identificacion"), null, null);
+            Clientes objClientes = new Clientes(rs.getInt("idCliente"), rs.getString("nombreCli"), rs.getString("apellidoCli"), "", null, null);
             DetalleFactura reporte= new DetalleFactura(rs.getInt("idDetalleFactura"), rs.getDate("fecha"), rs.getDouble("subTotal"), rs.getDouble("total"), 1, objClientes);
        listReportes.add(reporte);
         }

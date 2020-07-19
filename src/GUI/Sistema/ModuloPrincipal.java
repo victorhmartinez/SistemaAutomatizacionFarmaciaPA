@@ -51,11 +51,11 @@ public class ModuloPrincipal extends javax.swing.JFrame {
         lblTipo = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        btnVentas = new javax.swing.JButton();
         Reporte = new javax.swing.JButton();
         btnProductos = new javax.swing.JButton();
         btnClientes = new javax.swing.JButton();
         btnEmpleados = new javax.swing.JButton();
+        btnVentas = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         menuCliente = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -83,17 +83,6 @@ public class ModuloPrincipal extends javax.swing.JFrame {
         jLabel1.setToolTipText("");
         jdpescritorio.add(jLabel1);
         jLabel1.setBounds(0, 110, 1650, 490);
-
-        btnVentas.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        btnVentas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMG/Sistema/buy.png"))); // NOI18N
-        btnVentas.setText("VENTAS");
-        btnVentas.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnVentasMouseClicked(evt);
-            }
-        });
-        jdpescritorio.add(btnVentas);
-        btnVentas.setBounds(260, 30, 200, 50);
 
         Reporte.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         Reporte.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMG/Sistema/seo-report.png"))); // NOI18N
@@ -126,7 +115,7 @@ public class ModuloPrincipal extends javax.swing.JFrame {
             }
         });
         jdpescritorio.add(btnClientes);
-        btnClientes.setBounds(500, 30, 200, 50);
+        btnClientes.setBounds(510, 30, 200, 50);
 
         btnEmpleados.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         btnEmpleados.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMG/Sistema/empleado.png"))); // NOI18N
@@ -138,6 +127,22 @@ public class ModuloPrincipal extends javax.swing.JFrame {
         });
         jdpescritorio.add(btnEmpleados);
         btnEmpleados.setBounds(1040, 30, 200, 50);
+
+        btnVentas.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        btnVentas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMG/Sistema/buy.png"))); // NOI18N
+        btnVentas.setText("Realizar venta");
+        btnVentas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnVentasMouseClicked(evt);
+            }
+        });
+        btnVentas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVentasActionPerformed(evt);
+            }
+        });
+        jdpescritorio.add(btnVentas);
+        btnVentas.setBounds(260, 30, 220, 50);
 
         jMenuBar1.setBackground(new java.awt.Color(51, 51, 51));
         jMenuBar1.setForeground(new java.awt.Color(255, 0, 51));
@@ -175,13 +180,6 @@ public class ModuloPrincipal extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnVentasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVentasMouseClicked
-
-        // TODO add your handling code here:
-        ModuloVentas objVentas = new ModuloVentas();
-        objVentas.setVisible(true);
-    }//GEN-LAST:event_btnVentasMouseClicked
-
     private void btnProductosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnProductosMouseClicked
         // TODO add your handling code here:
         ModuloProductos objMedicamentos = new ModuloProductos();
@@ -210,6 +208,16 @@ public class ModuloPrincipal extends javax.swing.JFrame {
         ModuloEmpleado me = new ModuloEmpleado();
         me.setVisible(true);
     }//GEN-LAST:event_btnEmpleadosMouseClicked
+
+    private void btnVentasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVentasMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnVentasMouseClicked
+
+    private void btnVentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVentasActionPerformed
+        // TODO add your handling code here:
+        Ventas mv = new Ventas();
+        mv.setVisible(true);
+    }//GEN-LAST:event_btnVentasActionPerformed
 
     /**
      * @param args the command line arguments

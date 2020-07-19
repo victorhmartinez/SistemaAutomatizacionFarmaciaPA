@@ -74,7 +74,7 @@ public class ModuloReporte extends javax.swing.JFrame {
         try {
             logReportes.getReportes(lisDetalle, fechaI, fechaF);
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al recuperar datos" + ex);
+            JOptionPane.showMessageDialog(null, "Error al recuperar datos RR" + ex);
         }
     }
 

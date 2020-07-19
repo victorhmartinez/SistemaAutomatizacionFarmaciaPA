@@ -27,7 +27,7 @@ public class ModuloComposicion extends javax.swing.JFrame {
     /**
      * Creates new form Monodroga
      */
-    // ModuloMonodrogas objMonodrogas = new ModuloMonodrogas();
+
     ObtenerMedicamentos obMedicamentos = new ObtenerMedicamentos();
     ArrayList<Compone> listCompone = new ArrayList<>();
     DefaultTableModel dtm;

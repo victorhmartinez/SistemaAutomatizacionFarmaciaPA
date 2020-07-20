@@ -75,7 +75,6 @@ public class Ventas extends javax.swing.JFrame {
         this.setIconImage(new ImageIcon(getClass().getResource("/IMG/Sistema/buy.png")).getImage());
 
         setTitle("Detalle de Venta");
-
         this.txtCedulaCliente.setEnabled(false);
         this.txtNombreCliente.setEnabled(false);
         this.txtCorreo.setEnabled(false);
@@ -319,12 +318,12 @@ public class Ventas extends javax.swing.JFrame {
         txtCorreo.setText("");
         txtDireccion.setText("");
         txtSubtotal.setText("");
-//        lisCarrito.clear();
-//        txtIVA.setText("");
-//        txtTotal.setText("");
-//        totalT=0.0;
-//        iva=0.0;
-//        subtotalT=0.0;
+        lisCarrito.clear();
+        txtIVA.setText("");
+        txtTotal.setText("");
+        totalT=0.0;
+        iva=0.0;
+        subtotalT=0.0;
 
     }
 //Realizar venta
@@ -356,6 +355,60 @@ public class Ventas extends javax.swing.JFrame {
         lisCarrito.add(m);
 
     }
+        public boolean seRepite(Medicamentos m) {
+        if (tblPreVenta.getRowCount() > 0) {
+            for (int i = 0; i < tblPreVenta.getRowCount(); i++) {
+                if (m.getIdMedicamento() == (Integer.parseInt(tblPreVenta.getValueAt(i, 0).toString()))) {
+                    //break;
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public int obtenerFilaR(Medicamentos m) {
+        int var = 0;
+        if (tblPreVenta.getRowCount() > 0) {
+            for (int i = 0; i < tblPreVenta.getRowCount(); i++) {
+                if (m.getIdMedicamento() == (Integer.parseInt(tblPreVenta.getValueAt(i, 0).toString()))) {
+                    var = i;
+                    break;
+                }
+            }
+
+        }
+        return var;
+    }
+
+    public int obtenerCantidadA(Medicamentos m) {
+        int var = 0;
+        if (tblPreVenta.getRowCount() > 0) {
+            for (int i = 0; i < tblPreVenta.getRowCount(); i++) {
+                if (m.getIdMedicamento() == (Integer.parseInt(tblPreVenta.getValueAt(i, 0).toString()))) {
+                    var = Integer.parseInt(tblPreVenta.getValueAt(i, 2).toString());
+                    break;
+                }
+            }
+
+        }
+        return var;
+    }
+
+    public double obtenerTotalA(Medicamentos m) {
+        double var = 0;
+        if (tblPreVenta.getRowCount() > 0) {
+            for (int i = 0; i < tblPreVenta.getRowCount(); i++) {
+                if (m.getIdMedicamento() == (Integer.parseInt(tblPreVenta.getValueAt(i, 0).toString()))) {
+                    var = Double.parseDouble(tblPreVenta.getValueAt(i, 4).toString());
+                    break;
+                }
+            }
+
+        }
+        return var;
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -871,13 +924,16 @@ public class Ventas extends javax.swing.JFrame {
     }//GEN-LAST:event_txtBuscarMedicamentoKeyTyped
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-      int fsl = tblDatMedicamento.getSelectedRow();
+           int auxF = 0;
+        int auxC = 0;
+        double auxT = 0.0;
+        int fsl = tblDatMedicamento.getSelectedRow();
         int cant = 0;
         int idSelect;
-      DefaultTableModel model ;
-            double  x, ivas = 0.0;
-       String codigo,nombre,cantP,precioUn,totP;
-       
+        DefaultTableModel model;
+        double x = 0.0;
+        String codigo, nombre, cantP, precioUn, totP;
+
         Medicamentos m;
         if (fsl == -1) {
             JOptionPane.showConfirmDialog(null, "Debe seleccionar un producto");
@@ -889,32 +945,60 @@ public class Ventas extends javax.swing.JFrame {
                 cant = Integer.parseInt(txtCant.getText());
                 idSelect = Integer.parseInt(tblDatMedicamento.getValueAt(fsl, 0).toString());
                 m = objMedicamentos.getOneMedicamento(lisMedicamentos, idSelect);
+                auxC = cant + obtenerCantidadA(m);
+                auxT = obtenerTotalA(m);
+
                 if (objDetalle.cantDisponible(m, cant)) {
-                   
-                    codigo=String.valueOf(m.getIdMedicamento());
-                    nombre=m.getNombreMedic();
-                    cantP=String.valueOf(cant);
-                    precioUn=String.valueOf(m.getPrecioMedic());
+                    codigo = String.valueOf(m.getIdMedicamento());
+                    nombre = m.getNombreMedic();
+                    cantP = String.valueOf(auxC);
+                    precioUn = String.valueOf(m.getPrecioMedic());
                     x = (Double.parseDouble(precioUn)) * cant;
-                    x=Math.round(x * 100) / 100d;
-                    totP=String.valueOf(x);
-                    //Añadimos los datos a la tabla preventa
-                    model=(DefaultTableModel) tblPreVenta.getModel();
-                    String filaEle[] = {codigo, nombre, cantP, precioUn,totP};
-                    model.addRow(filaEle);
+                    x = (Math.round(x * 100) / 100d) + auxT;
+
+                    totP = String.valueOf(x);
+
+                    if (seRepite(m) == true) {
+                        auxF = obtenerFilaR(m);
+
+                        System.out.println(auxF);
+                        tblPreVenta.setValueAt(codigo, auxF, 0);
+                        tblPreVenta.setValueAt(nombre, auxF, 1);
+                        tblPreVenta.setValueAt(cantP, auxF, 2);
+                        tblPreVenta.setValueAt(precioUn, auxF, 3);
+                        tblPreVenta.setValueAt(totP, auxF, 4);
+                    } else {
+                        //Añadimos los datos a la tabla preventa
+                        model = (DefaultTableModel) tblPreVenta.getModel();
+                        String filaEle[] = {codigo, nombre, cantP, precioUn, totP};
+                        model.addRow(filaEle);
+                    }
+                    auxC = cant + auxC;
+                    //System.out.println("cantidad "+auxC);
                     //Calculamos los valores totales de la venta
-                    totalT=totalT+x;
-                    totalT=Math.round(totalT * 100) / 100d;
+                    //Quitar calculados
+                    Double p = 0.0;
+                    Double ivas = 0.0;
+                    Double t = 0.0;
+                    if (tblPreVenta.getRowCount() > 0) {
+                        for (int i = 0; i < tblPreVenta.getRowCount(); i++) {
+                            p = Double.parseDouble(tblPreVenta.getValueAt(i, 4).toString());
+                            t += p;
+                        }
+
+                    }
+                    totalT = t;
+                    totalT = Math.round(totalT * 100) / 100d;
                     ivas = totalT * 0.12;
-                    iva=ivas;
-                    iva=Math.round(iva * 100) / 100d;
+                    iva = ivas;
+                    iva = Math.round(iva * 100) / 100d;
                     subtotalT = totalT - ivas;
-                    subtotalT=Math.round(subtotalT * 100) / 100d;
+                    subtotalT = Math.round(subtotalT * 100) / 100d;
                     //Presentamos datos en los txt
                     txtSubtotal.setText(String.valueOf(subtotalT));
                     txtIVA.setText(String.valueOf(iva));
                     txtTotal.setText(String.valueOf(totalT));
-                
+
                 }
             }
         }
@@ -949,45 +1033,70 @@ public class Ventas extends javax.swing.JFrame {
     }//GEN-LAST:event_tblPreVentaMouseClicked
 
     private void btnRealizarVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRealizarVentaActionPerformed
+if(txtCedulaCliente.getText().equals("")){
+    JOptionPane.showMessageDialog(null,"Debe ingresar todos los datos del cliente");
+}else{
+    
 
-      Calendar cl = Calendar.getInstance();
-        int hora,minuto,seg;
-        hora=cl.get(Calendar.HOUR_OF_DAY);
-        minuto=cl.get(Calendar.MINUTE);
-        seg=cl.get(Calendar.SECOND);
-        String cadena=""+hora+minuto+seg;
-        try{
-            generarPdf(txtCedulaCliente.getText()+"_"+txtNombreCliente.getText()+"_"+cadena);
-        }catch(FileNotFoundException ex){
-            
-        }catch(DocumentException | IOException ex){
-           
-        }        
+       Calendar cl = Calendar.getInstance();
+        int hora, minuto, seg;
+        hora = cl.get(Calendar.HOUR_OF_DAY);
+        minuto = cl.get(Calendar.MINUTE);
+        seg = cl.get(Calendar.SECOND);
+        String cadena = "" + hora + minuto + seg;
+        try {
+            generarPdf(txtCedulaCliente.getText() + "_" + txtNombreCliente.getText() + "_" + cadena);
+        } catch (FileNotFoundException ex) {
+
+        } catch (DocumentException | IOException ex) {
+
+        }
         setDetalle();
         realizarVenta();
         objDetalle.imprimirCarrito(lisCarrito);
-       
+
         modificarStock();
         limpiar();
         lisMedicamentos.clear();
         limpiarTablaMedicamentos();
         cargarMedicamentos(lisMedicamentos);
-                
-        numDetalle=objDetalle.obtenerUltimaFactura()+1;
+
+        numDetalle = objDetalle.obtenerUltimaFactura() + 1;
         JOptionPane.showMessageDialog(null, "Venta Exitosa");
-       
+      } 
     }//GEN-LAST:event_btnRealizarVentaActionPerformed
 
     private void btnEliminarPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarPActionPerformed
-        if (tblPreVenta.getSelectedRow() != -1) {
+          if (tblPreVenta.getSelectedRow() != -1) {
             int descision = JOptionPane.showConfirmDialog(null, " Desea eliminar este producto?");
             if (descision == JOptionPane.YES_OPTION) {
                 //idSelect = tblPreVenta.getSelectedRow();
                 DefaultTableModel modeloPreventa = (DefaultTableModel) tblPreVenta.getModel();
-
                 modeloPreventa.removeRow(tblPreVenta.getSelectedRow());
-            }
+    }                                            
         }
+        //Quitar calculados
+        Double p = 0.0;
+        Double ivas = 0.0;
+        Double t = 0.0;
+        if (tblPreVenta.getRowCount() > 0) {
+            for (int i = 0; i < tblPreVenta.getRowCount(); i++) {
+                p = Double.parseDouble(tblPreVenta.getValueAt(i, 4).toString());
+                t +=p;
+            }
+
+        }
+        totalT = t;
+        totalT = Math.round(totalT * 100) / 100d;
+        ivas = totalT * 0.12;
+        iva = ivas;
+        iva = Math.round(iva * 100) / 100d;
+        subtotalT = totalT - ivas;
+        subtotalT = Math.round(subtotalT * 100) / 100d;
+        //Presentamos datos en los txt
+        txtSubtotal.setText(String.valueOf(subtotalT));
+        txtIVA.setText(String.valueOf(iva));
+        txtTotal.setText(String.valueOf(totalT));
     }//GEN-LAST:event_btnEliminarPActionPerformed
 
     private void btnCancelarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCancelarMouseClicked
@@ -1002,10 +1111,9 @@ public class Ventas extends javax.swing.JFrame {
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // TODO add your handling code here:
-  DefaultTableModel dm = (DefaultTableModel)tblPreVenta.getModel();
-        while(dm.getRowCount() > 0)
-        {
-        dm.removeRow(0);
+         DefaultTableModel dm = (DefaultTableModel) tblPreVenta.getModel();
+        while (dm.getRowCount() > 0) {
+            dm.removeRow(0);
         }
         limpiar();
         JOptionPane.showMessageDialog(null, "Proceso cancelado");

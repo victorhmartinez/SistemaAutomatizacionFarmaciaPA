@@ -135,7 +135,6 @@ this.setIconImage(new ImageIcon(getClass().getResource("/IMG/Sistema/medical.png
         txtFechaExpiracion = new javax.swing.JTextField();
         btnCancelar = new javax.swing.JButton();
         btnIngresarMedicamento = new javax.swing.JButton();
-        btnRealizarComposicion = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         txtBusquedaMedicamento = new javax.swing.JTextField();
         btnEditarMedicamento = new javax.swing.JButton();
@@ -201,20 +200,6 @@ this.setIconImage(new ImageIcon(getClass().getResource("/IMG/Sistema/medical.png
             }
         });
 
-        btnRealizarComposicion.setFont(new java.awt.Font("Microsoft JhengHei UI", 1, 12)); // NOI18N
-        btnRealizarComposicion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMG/Sistema/accept.png"))); // NOI18N
-        btnRealizarComposicion.setText("REALIZAR COMPOSICIÓN");
-        btnRealizarComposicion.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnRealizarComposicionMouseClicked(evt);
-            }
-        });
-        btnRealizarComposicion.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRealizarComposicionActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -245,11 +230,8 @@ this.setIconImage(new ImageIcon(getClass().getResource("/IMG/Sistema/medical.png
                         .addGap(54, 54, 54)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtFechaElabor, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtFechaExpiracion, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(38, 38, 38)
-                        .addComponent(btnRealizarComposicion)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(txtFechaExpiracion, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(137, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -283,9 +265,7 @@ this.setIconImage(new ImageIcon(getClass().getResource("/IMG/Sistema/medical.png
                             .addComponent(jLabel5))
                         .addGap(61, 61, 61))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(31, 31, 31)
-                        .addComponent(btnRealizarComposicion)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(83, 83, 83)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnIngresarMedicamento)
                             .addComponent(btnCancelar))
@@ -426,23 +406,6 @@ this.setIconImage(new ImageIcon(getClass().getResource("/IMG/Sistema/medical.png
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void btnRealizarComposicionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRealizarComposicionMouseClicked
-        // TODO add your handling code here:
-        /*int descision = JOptionPane.showConfirmDialog(null, "Desea ingresar otro proceso ?");
-        if (descision == JOptionPane.YES_OPTION) {
-               objMonodrogas.setVisible(true); 
-
-            } else if (descision == JOptionPane.NO_OPTION) {
-                JOptionPane.showMessageDialog(null, "OK");
-                 objMonodrogas.setVisible(true);
-
-            }*/
-//        ModuloComposicion objModComposicion = new ModuloComposicion();
-//        objModComposicion.setVisible(true);
-
-
-    }//GEN-LAST:event_btnRealizarComposicionMouseClicked
 
     private void btnCancelarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCancelarMouseClicked
         // TODO add your handling code here:
@@ -606,12 +569,6 @@ this.setIconImage(new ImageIcon(getClass().getResource("/IMG/Sistema/medical.png
          limpiar();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
-    private void btnRealizarComposicionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRealizarComposicionActionPerformed
-        // TODO add your handling code here:
-        ModuloComposicion mc = new ModuloComposicion();
-        mc.setVisible(true);
-    }//GEN-LAST:event_btnRealizarComposicionActionPerformed
-
     /**
      * @param args the command line arguments
      */
@@ -653,7 +610,6 @@ this.setIconImage(new ImageIcon(getClass().getResource("/IMG/Sistema/medical.png
     private javax.swing.JButton btnEditarMedicamento;
     private javax.swing.JButton btnEliminarMedicamento;
     private javax.swing.JButton btnIngresarMedicamento;
-    private javax.swing.JButton btnRealizarComposicion;
     private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JFormattedTextField jFormattedTextField1;
     private javax.swing.JLabel jLabel1;
